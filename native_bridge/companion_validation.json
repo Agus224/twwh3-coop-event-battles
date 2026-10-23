@@ -1,0 +1,13 @@
+{
+  "lua_runtime": "Lua 5.1 via lupa.lua51",
+  "tests_run": 31,
+  "failures": 0,
+  "errors": 0,
+  "success": true,
+  "live_game_tested": false,
+  "native_dll_mocked": true,
+  "limitations": [
+    "Does not execute the DLL or render the UI.",
+    "Does not establish multiplayer control, battle loading or native casualty/XP behavior."
+  ]
+}

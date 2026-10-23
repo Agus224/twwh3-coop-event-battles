@@ -1,0 +1,155 @@
+{
+  "dll_sha256": "3b5a59ec4d675bf08222ad55d408436a5bde44ed0b0a25e2358c74c51364039b",
+  "exe_sha256": "9bd58c63bd7fc5c9909b3d3d9b6b7a6ae4eac784369bf91a9e53c3e9f42be496",
+  "tests": [
+    {
+      "name": "AMD64 DLL",
+      "passed": true
+    },
+    {
+      "name": "DLL file version matches VERSION.json",
+      "passed": true
+    },
+    {
+      "name": "DLL product version matches VERSION.json",
+      "passed": true
+    },
+    {
+      "name": "Expected three exports only",
+      "passed": true
+    },
+    {
+      "name": "No remote process injection imports",
+      "passed": true
+    },
+    {
+      "name": "Application source never changes executable page protection",
+      "passed": true
+    },
+    {
+      "name": "DEP and ASLR enabled",
+      "passed": true
+    },
+    {
+      "name": "No CFG check on raw internal engine calls",
+      "passed": true
+    },
+    {
+      "name": "Native ABI version is 1",
+      "passed": true
+    },
+    {
+      "name": "Rejects non-game host",
+      "passed": true
+    },
+    {
+      "name": "Rejects null Lua state",
+      "passed": true
+    },
+    {
+      "name": "Profile matches analyzed executable SHA256",
+      "passed": true
+    },
+    {
+      "name": "Fourteen native entry signatures match file",
+      "passed": true
+    }
+  ],
+  "passed": 13,
+  "game_loaded": false,
+  "runtime_join_validated": false,
+  "limits": "DLL tested in Python host and native core with simulated engine only. Campaign/control/results require two game clients.",
+  "exports": [
+    "ceb_bridge_abi_version",
+    "ceb_bridge_host_supported",
+    "luaopen_ceb_native_bridge"
+  ],
+  "imports": [
+    "BCryptCloseAlgorithmProvider",
+    "BCryptCreateHash",
+    "BCryptDestroyHash",
+    "BCryptFinishHash",
+    "BCryptHashData",
+    "BCryptOpenAlgorithmProvider",
+    "CloseHandle",
+    "CreateFileW",
+    "DeleteCriticalSection",
+    "EncodePointer",
+    "EnterCriticalSection",
+    "ExitProcess",
+    "FindClose",
+    "FindFirstFileExW",
+    "FindNextFileW",
+    "FlsAlloc",
+    "FlsFree",
+    "FlsGetValue",
+    "FlsSetValue",
+    "FlushFileBuffers",
+    "FreeEnvironmentStringsW",
+    "FreeLibrary",
+    "GetACP",
+    "GetCPInfo",
+    "GetCommandLineA",
+    "GetCommandLineW",
+    "GetConsoleMode",
+    "GetConsoleOutputCP",
+    "GetCurrentProcess",
+    "GetCurrentProcessId",
+    "GetCurrentThreadId",
+    "GetEnvironmentStringsW",
+    "GetFileSizeEx",
+    "GetFileType",
+    "GetLastError",
+    "GetModuleFileNameW",
+    "GetModuleHandleExW",
+    "GetModuleHandleW",
+    "GetOEMCP",
+    "GetProcAddress",
+    "GetProcessHeap",
+    "GetStartupInfoW",
+    "GetStdHandle",
+    "GetStringTypeW",
+    "GetSystemTimeAsFileTime",
+    "HeapAlloc",
+    "HeapFree",
+    "HeapReAlloc",
+    "HeapSize",
+    "InitializeCriticalSectionAndSpinCount",
+    "InitializeCriticalSectionEx",
+    "InitializeSListHead",
+    "InterlockedFlushSList",
+    "IsDebuggerPresent",
+    "IsProcessorFeaturePresent",
+    "IsValidCodePage",
+    "LCMapStringW",
+    "LeaveCriticalSection",
+    "LoadLibraryExW",
+    "MultiByteToWideChar",
+    "QueryPerformanceCounter",
+    "RaiseException",
+    "ReadConsoleW",
+    "ReadFile",
+    "RtlCaptureContext",
+    "RtlLookupFunctionEntry",
+    "RtlPcToFileHeader",
+    "RtlUnwindEx",
+    "RtlVirtualUnwind",
+    "SetEndOfFile",
+    "SetFilePointerEx",
+    "SetLastError",
+    "SetStdHandle",
+    "SetUnhandledExceptionFilter",
+    "TerminateProcess",
+    "TlsAlloc",
+    "TlsFree",
+    "TlsGetValue",
+    "TlsSetValue",
+    "UnhandledExceptionFilter",
+    "VirtualProtect",
+    "VirtualQuery",
+    "WideCharToMultiByte",
+    "WriteConsoleW",
+    "WriteFile"
+  ],
+  "static_crt_note": "The statically linked Microsoft C runtime imports VirtualProtect. Bridge application code never calls it or patches executable instructions."
+}

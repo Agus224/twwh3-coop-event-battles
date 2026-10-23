@@ -1,0 +1,280 @@
+<?xml version='1.0' encoding='utf-8'?>
+<layout version="142" comment="CEB army picker: explicit layout, no DialogueBoxCC/TextButton callbacks" precache_condition="">
+	<hierarchy>
+		<root this="1468381F-87CB-459A-9DD3A9FA3EA1B0F9">
+			<ceb_picker this="0F3EE664-45F6-4E0B-8A5556CD457E0C7D">
+				<ceb_title this="4161E11C-2597-4ED5-BEA32AB9AB35AC11" />
+				<DY_text this="588B5F66-7E52-464E-97D197407DB4A7DA" />
+				<ceb_page this="9DDCAACB-BC85-457E-BC135E8A19392DFF" />
+				<ceb_row_template this="7A43DB14-3BF1-4FC5-A2F031BFD5537B93" />
+				<ceb_army_prev this="6C5101FD-6F61-4D25-AD6514BDD91B8E4A" />
+				<ceb_army_more this="BC3714E3-C0B7-4281-88325D343A3BF21C" />
+				<button_cancel this="356B9821-7DEF-44CE-8723D3ABF803BD0C" />
+			</ceb_picker>
+		</root>
+	</hierarchy>
+	<components>
+		<root this="1468381F-87CB-459A-9DD3A9FA3EA1B0F9" id="root" uniqueguid="1468381F-87CB-459A-9DD3A9FA3EA1B0F9" offset="0.00,0.00" allowhorizontalresize="true" allowverticalresize="true" priority="250" tooltipslocalised="true" currentstate="37BAB112-8C1F-4C02-B975829CFB7B15E4" defaultstate="37BAB112-8C1F-4C02-B975829CFB7B15E4">
+			<states>
+				<newstate this="37BAB112-8C1F-4C02-B975829CFB7B15E4" name="NewState" uniqueguid="37BAB112-8C1F-4C02-B975829CFB7B15E4" width="1600" height="900" />
+			</states>
+		</root>
+		<ceb_picker this="0F3EE664-45F6-4E0B-8A5556CD457E0C7D" id="ceb_picker" offset="0.00,0.00" allowhorizontalresize="true" priority="250" tooltipslocalised="true" soundcategory="UI_GBL_POPUP_Dialogue_Box_No_State" uniqueguid="0F3EE664-45F6-4E0B-8A5556CD457E0C7D" currentstate="C22A80F2-BD20-432C-AF925E0B8DB7B39A" allowverticalresize="true">
+			<componentimages>
+				<component_image this="8A34713B-8899-44A5-9E74AF91F608417B" uniqueguid="8A34713B-8899-44A5-9E74AF91F608417B" imagepath="ui/skins/default/panel_back_tile.png" />
+				<component_image this="A6589385-554F-4E4E-97B0C5FAD420F82E" uniqueguid="A6589385-554F-4E4E-97B0C5FAD420F82E" imagepath="ui/skins/default/panel_back_border.png" />
+				<component_image this="4853FDF1-7ACF-4B00-AE877CBB6A170169" uniqueguid="4853FDF1-7ACF-4B00-AE877CBB6A170169" imagepath="ui/skins/default/panel_back_bottom.png" />
+			</componentimages>
+			<states>
+				<newstate this="C22A80F2-BD20-432C-AF925E0B8DB7B39A" name="NewState" width="420" height="267" focustype="Active" interactive="true" uniqueguid="C22A80F2-BD20-432C-AF925E0B8DB7B39A">
+					<imagemetrics>
+						<image this="EC457D70-D5FD-4D6B-AF82E2A702C71708" uniqueguid="EC457D70-D5FD-4D6B-AF82E2A702C71708" componentimage="8A34713B-8899-44A5-9E74AF91F608417B" width="420" height="267" tile="true" dockpoint="Center" margin="5.00,5.00,5.00,5.00" />
+						<image this="3658F8AE-8E03-4D08-A21592702A121530" uniqueguid="3658F8AE-8E03-4D08-A21592702A121530" componentimage="A6589385-554F-4E4E-97B0C5FAD420F82E" width="420" height="267" tile="true" margin="30.00,30.00,30.00,30.00" />
+						<image this="6C871811-2016-4A18-9B6BBBF8836E1A6B" uniqueguid="6C871811-2016-4A18-9B6BBBF8836E1A6B" componentimage="4853FDF1-7ACF-4B00-AE877CBB6A170169" offset="0.00,192.00" width="420" height="75" tile="true" dockpoint="Bottom Center" canresizeheight="false" margin="30.00,40.00,30.00,40.00" />
+					</imagemetrics>
+				</newstate>
+			</states>
+		</ceb_picker>
+		<ceb_title this="4161E11C-2597-4ED5-BEA32AB9AB35AC11" id="ceb_title" uniqueguid="4161E11C-2597-4ED5-BEA32AB9AB35AC11" offset="0.00,0.00" allowhorizontalresize="true" allowverticalresize="true" priority="250" tooltipslocalised="true" currentstate="5F202B81-B6A7-425E-AF0BE18A4E095775" defaultstate="5F202B81-B6A7-425E-AF0BE18A4E095775">
+			<states>
+				<newstate this="5F202B81-B6A7-425E-AF0BE18A4E095775" name="NewState" uniqueguid="5F202B81-B6A7-425E-AF0BE18A4E095775" width="552" height="28">
+					<component_text text="" texthalign="Left" textvalign="Top" textxoffset="0.00,0.00" textyoffset="0.00,0.00" font_m_size="16" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_16" />
+				</newstate>
+			</states>
+		</ceb_title>
+		<DY_text this="588B5F66-7E52-464E-97D197407DB4A7DA" id="DY_text" uniqueguid="588B5F66-7E52-464E-97D197407DB4A7DA" offset="0.00,0.00" allowhorizontalresize="true" allowverticalresize="true" priority="250" tooltipslocalised="true" currentstate="1AB7CA8F-563F-40FB-B228D3792241ECE7" defaultstate="1AB7CA8F-563F-40FB-B228D3792241ECE7">
+			<states>
+				<newstate this="1AB7CA8F-563F-40FB-B228D3792241ECE7" name="NewState" uniqueguid="1AB7CA8F-563F-40FB-B228D3792241ECE7" width="552" height="78">
+					<component_text text="" texthalign="Left" textvalign="Top" textxoffset="0.00,0.00" textyoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" />
+				</newstate>
+			</states>
+		</DY_text>
+		<ceb_page this="9DDCAACB-BC85-457E-BC135E8A19392DFF" id="ceb_page" uniqueguid="9DDCAACB-BC85-457E-BC135E8A19392DFF" offset="0.00,0.00" allowhorizontalresize="true" allowverticalresize="true" priority="250" tooltipslocalised="true" currentstate="76621115-ED72-48DE-9023273250949F3C" defaultstate="76621115-ED72-48DE-9023273250949F3C">
+			<states>
+				<newstate this="76621115-ED72-48DE-9023273250949F3C" name="NewState" uniqueguid="76621115-ED72-48DE-9023273250949F3C" width="58" height="34">
+					<component_text text="" texthalign="Left" textvalign="Top" textxoffset="0.00,0.00" textyoffset="0.00,0.00" font_m_size="12" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_12" />
+				</newstate>
+			</states>
+		</ceb_page>
+		<ceb_row_template this="7A43DB14-3BF1-4FC5-A2F031BFD5537B93" id="ceb_row_template" offset="0.00,0.00" allowhorizontalresize="true" allowverticalresize="true" priority="250" tooltipslocalised="true" uniqueguid="7A43DB14-3BF1-4FC5-A2F031BFD5537B93" currentstate="2C44D5C2-5561-40AE-8E466DE9BC3E63D2" defaultstate="2C44D5C2-5561-40AE-8E466DE9BC3E63D2" visible="false" soundcategory="UI_GBL_HUD_Generic">
+			<componentimages>
+				<component_image this="E307D974-DABE-480D-8CFE27E437D58A05" uniqueguid="E307D974-DABE-480D-8CFE27E437D58A05" imagepath="ui/skins/default/button_square_large_text_active.png" />
+				<component_image this="8D9680C4-3E8F-4150-AFE7B01A397C0E6E" uniqueguid="8D9680C4-3E8F-4150-AFE7B01A397C0E6E" imagepath="ui/skins/default/button_square_large_text_hover.png" />
+				<component_image this="E9160BE1-7CDB-445C-A5B3E58FB5A87C8E" uniqueguid="E9160BE1-7CDB-445C-A5B3E58FB5A87C8E" imagepath="ui/skins/default/button_square_large_text_pressed.png" />
+				<component_image this="7C194B70-5766-4059-8A0B39289F4745D7" uniqueguid="7C194B70-5766-4059-8A0B39289F4745D7" imagepath="ui/skins/default/button_square_large_text_inactive.png" />
+			</componentimages>
+			<states>
+				<active this="2C44D5C2-5561-40AE-8E466DE9BC3E63D2" name="active" width="460" height="40" interactive="true" uniqueguid="2C44D5C2-5561-40AE-8E466DE9BC3E63D2" stateeditordisplaypos="20.00,24.00">
+					<imagemetrics>
+						<image this="926F3250-36CE-4E0E-88C71393932CAF7B" uniqueguid="926F3250-36CE-4E0E-88C71393932CAF7B" componentimage="E307D974-DABE-480D-8CFE27E437D58A05" width="460" height="40" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition transition_m_target_state="BC4FE341-A1D3-44BF-B37922A526B3C48F" transition_m_transition_time="200" transition_m_interpolation_property_mask="64" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</active>
+				<down this="520752C1-50CC-421C-B19105169660E074" name="down" width="460" height="40" interactive="true" uniqueguid="520752C1-50CC-421C-B19105169660E074" stateeditordisplaypos="145.00,219.00">
+					<imagemetrics>
+						<image this="5A8D5A13-26A5-427E-8FED5A8374E35D63" uniqueguid="5A8D5A13-26A5-427E-8FED5A8374E35D63" componentimage="E9160BE1-7CDB-445C-A5B3E58FB5A87C8E" width="460" height="40" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition index="1" transition_m_target_state="FE348E9A-BCFF-41DD-A90A27694E4A8918" />
+						<transition index="3" transition_m_target_state="BC4FE341-A1D3-44BF-B37922A526B3C48F" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</down>
+				<down_off this="FE348E9A-BCFF-41DD-A90A27694E4A8918" name="down_off" width="460" height="40" interactive="true" uniqueguid="FE348E9A-BCFF-41DD-A90A27694E4A8918" stateeditordisplaypos="29.00,319.00">
+					<imagemetrics>
+						<image this="400855A9-A1BF-4FD0-B0569A8CCC43FDC6" uniqueguid="400855A9-A1BF-4FD0-B0569A8CCC43FDC6" componentimage="E307D974-DABE-480D-8CFE27E437D58A05" width="460" height="40" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition transition_m_target_state="520752C1-50CC-421C-B19105169660E074" />
+						<transition index="8" transition_m_target_state="2C44D5C2-5561-40AE-8E466DE9BC3E63D2" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</down_off>
+				<hover this="BC4FE341-A1D3-44BF-B37922A526B3C48F" name="hover" width="460" height="40" interactive="true" uniqueguid="BC4FE341-A1D3-44BF-B37922A526B3C48F" stateeditordisplaypos="137.00,126.00">
+					<imagemetrics>
+						<image this="7AA2C872-8BA5-45CC-B3932EA6DA29090E" uniqueguid="7AA2C872-8BA5-45CC-B3932EA6DA29090E" componentimage="8D9680C4-3E8F-4150-AFE7B01A397C0E6E" width="460" height="40" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition index="1" transition_m_target_state="2C44D5C2-5561-40AE-8E466DE9BC3E63D2" transition_m_transition_time="200" transition_m_interpolation_property_mask="64" />
+						<transition index="2" transition_m_target_state="520752C1-50CC-421C-B19105169660E074" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</hover>
+				<inactive this="D22069C8-011C-4D86-80B5916A1E700A31" name="inactive" width="460" height="40" interactive="true" disabled="true" uniqueguid="D22069C8-011C-4D86-80B5916A1E700A31">
+					<imagemetrics>
+						<image this="78E32A58-896E-4A36-859B984A21F9B5BC" uniqueguid="78E32A58-896E-4A36-859B984A21F9B5BC" componentimage="7C194B70-5766-4059-8A0B39289F4745D7" width="460" height="40" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</inactive>
+			</states>
+		</ceb_row_template>
+		<ceb_army_prev this="6C5101FD-6F61-4D25-AD6514BDD91B8E4A" id="ceb_army_prev" offset="0.00,0.00" allowhorizontalresize="true" allowverticalresize="true" priority="250" tooltipslocalised="true" uniqueguid="6C5101FD-6F61-4D25-AD6514BDD91B8E4A" currentstate="80533464-1C5D-4014-A38CA14FA83EEBD1" defaultstate="80533464-1C5D-4014-A38CA14FA83EEBD1" visible="true" soundcategory="UI_GBL_HUD_Generic">
+			<componentimages>
+				<component_image this="FEE94023-B741-4D51-ABF8040EAC9870C8" uniqueguid="FEE94023-B741-4D51-ABF8040EAC9870C8" imagepath="ui/skins/default/button_square_large_text_active.png" />
+				<component_image this="0ECD3475-DF6B-44A7-8B98935DAA38839D" uniqueguid="0ECD3475-DF6B-44A7-8B98935DAA38839D" imagepath="ui/skins/default/button_square_large_text_hover.png" />
+				<component_image this="8220F95C-95D2-492E-B4BDA2F6CE1154CA" uniqueguid="8220F95C-95D2-492E-B4BDA2F6CE1154CA" imagepath="ui/skins/default/button_square_large_text_pressed.png" />
+				<component_image this="C64397EB-A7FA-4761-A5293F4A516A02A4" uniqueguid="C64397EB-A7FA-4761-A5293F4A516A02A4" imagepath="ui/skins/default/button_square_large_text_inactive.png" />
+			</componentimages>
+			<states>
+				<active this="80533464-1C5D-4014-A38CA14FA83EEBD1" name="active" width="100" height="34" interactive="true" uniqueguid="80533464-1C5D-4014-A38CA14FA83EEBD1" stateeditordisplaypos="20.00,24.00">
+					<imagemetrics>
+						<image this="51B4BD90-1F54-45D9-A020EAB20042BCE0" uniqueguid="51B4BD90-1F54-45D9-A020EAB20042BCE0" componentimage="FEE94023-B741-4D51-ABF8040EAC9870C8" width="100" height="34" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition transition_m_target_state="83A79489-1DE3-47B4-BB1898D7F3066D0A" transition_m_transition_time="200" transition_m_interpolation_property_mask="64" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</active>
+				<down this="EC574192-CB83-4FD1-94DB6CF219138893" name="down" width="100" height="34" interactive="true" uniqueguid="EC574192-CB83-4FD1-94DB6CF219138893" stateeditordisplaypos="145.00,219.00">
+					<imagemetrics>
+						<image this="9408A162-4A91-48CE-93C274C5668B8D50" uniqueguid="9408A162-4A91-48CE-93C274C5668B8D50" componentimage="8220F95C-95D2-492E-B4BDA2F6CE1154CA" width="100" height="34" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition index="1" transition_m_target_state="C0D18E59-3B6E-4E34-A964AE42022B042B" />
+						<transition index="3" transition_m_target_state="83A79489-1DE3-47B4-BB1898D7F3066D0A" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</down>
+				<down_off this="C0D18E59-3B6E-4E34-A964AE42022B042B" name="down_off" width="100" height="34" interactive="true" uniqueguid="C0D18E59-3B6E-4E34-A964AE42022B042B" stateeditordisplaypos="29.00,319.00">
+					<imagemetrics>
+						<image this="19DB1406-5707-409C-9AA51741B2DA24CB" uniqueguid="19DB1406-5707-409C-9AA51741B2DA24CB" componentimage="FEE94023-B741-4D51-ABF8040EAC9870C8" width="100" height="34" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition transition_m_target_state="EC574192-CB83-4FD1-94DB6CF219138893" />
+						<transition index="8" transition_m_target_state="80533464-1C5D-4014-A38CA14FA83EEBD1" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</down_off>
+				<hover this="83A79489-1DE3-47B4-BB1898D7F3066D0A" name="hover" width="100" height="34" interactive="true" uniqueguid="83A79489-1DE3-47B4-BB1898D7F3066D0A" stateeditordisplaypos="137.00,126.00">
+					<imagemetrics>
+						<image this="D9AB4948-E2D5-4DA0-B3066FA3AB0AD932" uniqueguid="D9AB4948-E2D5-4DA0-B3066FA3AB0AD932" componentimage="0ECD3475-DF6B-44A7-8B98935DAA38839D" width="100" height="34" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition index="1" transition_m_target_state="80533464-1C5D-4014-A38CA14FA83EEBD1" transition_m_transition_time="200" transition_m_interpolation_property_mask="64" />
+						<transition index="2" transition_m_target_state="EC574192-CB83-4FD1-94DB6CF219138893" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</hover>
+				<inactive this="F35086E8-7FE1-4E34-930FB4D6521AEADB" name="inactive" width="100" height="34" interactive="true" disabled="true" uniqueguid="F35086E8-7FE1-4E34-930FB4D6521AEADB">
+					<imagemetrics>
+						<image this="8C46CE25-4E5F-40DF-AAD1585A3AF0D154" uniqueguid="8C46CE25-4E5F-40DF-AAD1585A3AF0D154" componentimage="C64397EB-A7FA-4761-A5293F4A516A02A4" width="100" height="34" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</inactive>
+			</states>
+		</ceb_army_prev>
+		<ceb_army_more this="BC3714E3-C0B7-4281-88325D343A3BF21C" id="ceb_army_more" offset="0.00,0.00" allowhorizontalresize="true" allowverticalresize="true" priority="250" tooltipslocalised="true" uniqueguid="BC3714E3-C0B7-4281-88325D343A3BF21C" currentstate="6B01EB15-8447-4764-864AA1F4BE70EB04" defaultstate="6B01EB15-8447-4764-864AA1F4BE70EB04" visible="true" soundcategory="UI_GBL_HUD_Generic">
+			<componentimages>
+				<component_image this="D99A8EA7-A79E-494B-A8ABF98F144AC0CF" uniqueguid="D99A8EA7-A79E-494B-A8ABF98F144AC0CF" imagepath="ui/skins/default/button_square_large_text_active.png" />
+				<component_image this="A59E0976-9F16-4239-A4329D469BF7E858" uniqueguid="A59E0976-9F16-4239-A4329D469BF7E858" imagepath="ui/skins/default/button_square_large_text_hover.png" />
+				<component_image this="AB490540-8CC6-4278-98DC4CC700649219" uniqueguid="AB490540-8CC6-4278-98DC4CC700649219" imagepath="ui/skins/default/button_square_large_text_pressed.png" />
+				<component_image this="0D94357B-6446-45CD-80BAD78E3B8047C4" uniqueguid="0D94357B-6446-45CD-80BAD78E3B8047C4" imagepath="ui/skins/default/button_square_large_text_inactive.png" />
+			</componentimages>
+			<states>
+				<active this="6B01EB15-8447-4764-864AA1F4BE70EB04" name="active" width="100" height="34" interactive="true" uniqueguid="6B01EB15-8447-4764-864AA1F4BE70EB04" stateeditordisplaypos="20.00,24.00">
+					<imagemetrics>
+						<image this="6F983A3A-3316-4922-9E7140BF6E839189" uniqueguid="6F983A3A-3316-4922-9E7140BF6E839189" componentimage="D99A8EA7-A79E-494B-A8ABF98F144AC0CF" width="100" height="34" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition transition_m_target_state="122C1EA8-08E8-439E-9A5678A754FD27A0" transition_m_transition_time="200" transition_m_interpolation_property_mask="64" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</active>
+				<down this="5FBA3D5A-3DA7-4A49-8B03299E5E1798BD" name="down" width="100" height="34" interactive="true" uniqueguid="5FBA3D5A-3DA7-4A49-8B03299E5E1798BD" stateeditordisplaypos="145.00,219.00">
+					<imagemetrics>
+						<image this="11F3CD0B-62F5-4773-985ABDD845F446A4" uniqueguid="11F3CD0B-62F5-4773-985ABDD845F446A4" componentimage="AB490540-8CC6-4278-98DC4CC700649219" width="100" height="34" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition index="1" transition_m_target_state="3E18210F-CC42-434B-854A3008C819F1C9" />
+						<transition index="3" transition_m_target_state="122C1EA8-08E8-439E-9A5678A754FD27A0" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</down>
+				<down_off this="3E18210F-CC42-434B-854A3008C819F1C9" name="down_off" width="100" height="34" interactive="true" uniqueguid="3E18210F-CC42-434B-854A3008C819F1C9" stateeditordisplaypos="29.00,319.00">
+					<imagemetrics>
+						<image this="806E273D-C764-4603-847555D3862BDEB0" uniqueguid="806E273D-C764-4603-847555D3862BDEB0" componentimage="D99A8EA7-A79E-494B-A8ABF98F144AC0CF" width="100" height="34" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition transition_m_target_state="5FBA3D5A-3DA7-4A49-8B03299E5E1798BD" />
+						<transition index="8" transition_m_target_state="6B01EB15-8447-4764-864AA1F4BE70EB04" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</down_off>
+				<hover this="122C1EA8-08E8-439E-9A5678A754FD27A0" name="hover" width="100" height="34" interactive="true" uniqueguid="122C1EA8-08E8-439E-9A5678A754FD27A0" stateeditordisplaypos="137.00,126.00">
+					<imagemetrics>
+						<image this="17FBF5B2-FD06-45E8-A30B46F53C177308" uniqueguid="17FBF5B2-FD06-45E8-A30B46F53C177308" componentimage="A59E0976-9F16-4239-A4329D469BF7E858" width="100" height="34" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition index="1" transition_m_target_state="6B01EB15-8447-4764-864AA1F4BE70EB04" transition_m_transition_time="200" transition_m_interpolation_property_mask="64" />
+						<transition index="2" transition_m_target_state="5FBA3D5A-3DA7-4A49-8B03299E5E1798BD" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</hover>
+				<inactive this="BB9AFB74-E1D3-4192-B6077B53B863906F" name="inactive" width="100" height="34" interactive="true" disabled="true" uniqueguid="BB9AFB74-E1D3-4192-B6077B53B863906F">
+					<imagemetrics>
+						<image this="795A8855-C3CD-4724-84773B3D44F396FB" uniqueguid="795A8855-C3CD-4724-84773B3D44F396FB" componentimage="0D94357B-6446-45CD-80BAD78E3B8047C4" width="100" height="34" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</inactive>
+			</states>
+		</ceb_army_more>
+		<button_cancel this="356B9821-7DEF-44CE-8723D3ABF803BD0C" id="button_cancel" offset="0.00,0.00" allowhorizontalresize="true" allowverticalresize="true" priority="250" tooltipslocalised="true" uniqueguid="356B9821-7DEF-44CE-8723D3ABF803BD0C" currentstate="33062F0A-97E4-4005-AF3F31B300DB2D73" defaultstate="33062F0A-97E4-4005-AF3F31B300DB2D73" visible="true" soundcategory="UI_GBL_HUD_Generic">
+			<componentimages>
+				<component_image this="28FF2F83-99D0-4E2E-93BA0A4874DBD372" uniqueguid="28FF2F83-99D0-4E2E-93BA0A4874DBD372" imagepath="ui/skins/default/button_square_large_text_active.png" />
+				<component_image this="76E6D6B6-74F5-4747-BD19F41F2E7CF066" uniqueguid="76E6D6B6-74F5-4747-BD19F41F2E7CF066" imagepath="ui/skins/default/button_square_large_text_hover.png" />
+				<component_image this="E5A5EA53-E03D-4F76-B7965CD093317B19" uniqueguid="E5A5EA53-E03D-4F76-B7965CD093317B19" imagepath="ui/skins/default/button_square_large_text_pressed.png" />
+				<component_image this="A08EE5EB-8E90-4E57-BE997901C4BC1CDE" uniqueguid="A08EE5EB-8E90-4E57-BE997901C4BC1CDE" imagepath="ui/skins/default/button_square_large_text_inactive.png" />
+			</componentimages>
+			<states>
+				<active this="33062F0A-97E4-4005-AF3F31B300DB2D73" name="active" width="112" height="34" interactive="true" uniqueguid="33062F0A-97E4-4005-AF3F31B300DB2D73" stateeditordisplaypos="20.00,24.00">
+					<imagemetrics>
+						<image this="A54621D0-66BF-4F8A-86C56833F951580D" uniqueguid="A54621D0-66BF-4F8A-86C56833F951580D" componentimage="28FF2F83-99D0-4E2E-93BA0A4874DBD372" width="112" height="34" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition transition_m_target_state="152AC360-F03A-4FD1-844D310BE984BB54" transition_m_transition_time="200" transition_m_interpolation_property_mask="64" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</active>
+				<down this="0B27ECC2-7E8E-4A8A-947C0AC5F075611E" name="down" width="112" height="34" interactive="true" uniqueguid="0B27ECC2-7E8E-4A8A-947C0AC5F075611E" stateeditordisplaypos="145.00,219.00">
+					<imagemetrics>
+						<image this="9FDB4260-BD93-4EE5-BE223996937ECE74" uniqueguid="9FDB4260-BD93-4EE5-BE223996937ECE74" componentimage="E5A5EA53-E03D-4F76-B7965CD093317B19" width="112" height="34" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition index="1" transition_m_target_state="BF623525-EE4F-4D69-BECCAB5D32B72515" />
+						<transition index="3" transition_m_target_state="152AC360-F03A-4FD1-844D310BE984BB54" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</down>
+				<down_off this="BF623525-EE4F-4D69-BECCAB5D32B72515" name="down_off" width="112" height="34" interactive="true" uniqueguid="BF623525-EE4F-4D69-BECCAB5D32B72515" stateeditordisplaypos="29.00,319.00">
+					<imagemetrics>
+						<image this="7D23255C-3A37-4464-96BC67EE7E019239" uniqueguid="7D23255C-3A37-4464-96BC67EE7E019239" componentimage="28FF2F83-99D0-4E2E-93BA0A4874DBD372" width="112" height="34" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition transition_m_target_state="0B27ECC2-7E8E-4A8A-947C0AC5F075611E" />
+						<transition index="8" transition_m_target_state="33062F0A-97E4-4005-AF3F31B300DB2D73" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</down_off>
+				<hover this="152AC360-F03A-4FD1-844D310BE984BB54" name="hover" width="112" height="34" interactive="true" uniqueguid="152AC360-F03A-4FD1-844D310BE984BB54" stateeditordisplaypos="137.00,126.00">
+					<imagemetrics>
+						<image this="39F58E45-C078-428E-9DB3365B1A23B788" uniqueguid="39F58E45-C078-428E-9DB3365B1A23B788" componentimage="76E6D6B6-74F5-4747-BD19F41F2E7CF066" width="112" height="34" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<transitionmap>
+						<transition index="1" transition_m_target_state="33062F0A-97E4-4005-AF3F31B300DB2D73" transition_m_transition_time="200" transition_m_interpolation_property_mask="64" />
+						<transition index="2" transition_m_target_state="0B27ECC2-7E8E-4A8A-947C0AC5F075611E" />
+					</transitionmap>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</hover>
+				<inactive this="24A7E400-5C00-4733-AD9D734CAC1A71A6" name="inactive" width="112" height="34" interactive="true" disabled="true" uniqueguid="24A7E400-5C00-4733-AD9D734CAC1A71A6">
+					<imagemetrics>
+						<image this="AFA144DA-38BE-4BDE-A6CBC3463EA6762F" uniqueguid="AFA144DA-38BE-4BDE-A6CBC3463EA6762F" componentimage="A08EE5EB-8E90-4E57-BE997901C4BC1CDE" width="112" height="34" margin="14.00,14.00,14.00,14.00" />
+					</imagemetrics>
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</inactive>
+			</states>
+		</button_cancel>
+	</components>
+</layout>

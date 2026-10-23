@@ -1,0 +1,63 @@
+{
+  "exe_sha256": "9bd58c63bd7fc5c9909b3d3d9b6b7a6ae4eac784369bf91a9e53c3e9f42be496",
+  "image_size": 235048960,
+  "timestamp": 1791936244,
+  "functions": {
+    "allocate": {
+      "rva": "0x4d3da0",
+      "signature": "48895c2408574883ec3065488b042558000000488bf9b918"
+    },
+    "release": {
+      "rva": "0x4e98d4",
+      "signature": "4885c9741e534883ec20488bd9e88a450300488b05cb75f9"
+    },
+    "destroy_cohort": {
+      "rva": "0x2676658",
+      "signature": "40534883ec20488bd94881c110040000e80fa8ffff488d8b"
+    },
+    "construct_cohort": {
+      "rva": "0x26687b4",
+      "signature": "48895c24204c894424185556574154415541564157488d6c"
+    },
+    "append_cohort": {
+      "rva": "0x2642468",
+      "signature": "488bc44889580848896810488970184889782041564883ec"
+    },
+    "prepare_character": {
+      "rva": "0x26b5c78",
+      "signature": "4883ec38488b82a00300004885c07404488b401080b8c41b"
+    },
+    "observe_force": {
+      "rva": "0x1c3adf0",
+      "signature": "48895c24104889742418574883ec20488bd9488bfa488b49"
+    },
+    "initialize_cohort": {
+      "rva": "0x269af00",
+      "signature": "40555356574154415541564157488bec4883ec484c8b9af8"
+    },
+    "lookup_force": {
+      "rva": "0x1c6a30c",
+      "signature": "4883ec28833a00740fe8ca49b4ff4885c07405488b00eb02"
+    },
+    "at_war": {
+      "rva": "0x26ba60c",
+      "signature": "4883ec28e8c73ffeff4533c084c07404b001eb24483bd174"
+    },
+    "reinforcement_direction": {
+      "rva": "0x2692774",
+      "signature": "48895c241048896c2420565741564883ec20488be94d8bf1"
+    },
+    "make_force_data": {
+      "rva": "0x2669900",
+      "signature": "48895c240848896c24104889742418574883ec2048891148"
+    },
+    "push_force_data": {
+      "rva": "0x263f6b0",
+      "signature": "48895c240848896c2410488974241857415641574883ec20"
+    },
+    "destroy_force_data": {
+      "rva": "0x2676720",
+      "signature": "40534883ec20488bd9488b89800000004885c97405e8368c"
+    }
+  }
+}
