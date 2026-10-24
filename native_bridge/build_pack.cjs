@@ -12,8 +12,8 @@ const members = {
   'script/campaign/mod/coop_event_battles.lua': fs.readFileSync(path.join(base, 'campaign_bridge.lua')),
 };
 members['ui/common ui/ceb_army_picker.twui.xml'] = fs.readFileSync(path.join(base, '../ui_src/ceb_army_picker.twui.xml'));
-// Preserve script logging from the working build for campaign/battle diagnostics.
-members['script/enable_console_logging'] = Buffer.from('enabled by coop_event_battles ' + VERSION + '\n');
+// Do not ship script/enable_console_logging: it makes the game write a new script_log_*.txt
+// in the game folder on every launch, and those files are never cleaned up (1.1.1).
 members['ui/campaign ui/mp_pending_action_blocking_msg.twui.xml'] = fs.readFileSync(path.join(base, '../ui_src/mp_pending_action_blocking_msg.twui.xml'));
 const out = path.join(base, 'dist');
 fs.mkdirSync(out, {recursive:true});

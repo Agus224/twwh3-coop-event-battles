@@ -33,6 +33,8 @@ function ceb:extract_native_dll()
 end
 
 function ceb:load_native()
+    -- The DLL appends to coop_event_battles_native_log.txt; keep that file small as well.
+    pcall(ceb.trim_log, "coop_event_battles_native_log.txt", 256 * 1024, 64 * 1024)
     local pcall_ok, extracted, detail = pcall(function() return self:extract_native_dll() end)
     if pcall_ok then
         self:log("Native DLL extraction ok=" .. tostring(extracted) .. " build=" .. tostring(self.build) .. " detail=" .. tostring(detail))
