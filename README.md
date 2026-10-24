@@ -65,14 +65,14 @@ Después de cargar una campaña cooperativa con el mod, en PowerShell:
 Get-FileHash "C:\Program Files (x86)\Steam\steamapps\common\Total War WARHAMMER III\ceb_native_bridge.dll" -Algorithm SHA256
 ```
 
-El resultado tiene que coincidir con el SHA-256 de la DLL publicado en la [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) de esa versión. Para la versión 1.1:
+El resultado tiene que coincidir con el SHA-256 de la DLL publicado en la [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) de esa versión. Para la versión 1.1.1:
 
 | Archivo | SHA-256 |
 |---|---|
-| `ceb_native_bridge.dll` | `3b5a59ec4d675bf08222ad55d408436a5bde44ed0b0a25e2358c74c51364039b` |
-| `coop_event_battles.pack` | `88dbe376b9ce2eddb69df73ea93c1e308d0fef4dd33acc22ad887cac07e5b86f` |
+| `ceb_native_bridge.dll` | `102827b8b0c73e7890bbd49de807462d0eb66e33d49e86d5d7770f2b4baa3a20` |
+| `coop_event_battles.pack` | `be817a1d7333bb0386a6ce57e64c6c07d5c1ab5d2f3b66401a69ec2db2d19f86` |
 
-[`release/1.1/native_build.json`](release/1.1/native_build.json) registra el hash de los archivos fuente con los que se compiló esa DLL. El workflow de GitHub Actions compila la DLL desde este código en cada cambio y muestra su hash.
+[`release/1.1.1/native_build.json`](release/1.1.1/native_build.json) registra el hash de los archivos fuente con los que se compiló esa DLL. El workflow de GitHub Actions compila la DLL desde este código en cada cambio y muestra su hash.
 
 Los antivirus pueden marcar la DLL porque no está firmada digitalmente.
 
@@ -173,14 +173,14 @@ After loading a co-op campaign with the mod, in PowerShell:
 Get-FileHash "C:\Program Files (x86)\Steam\steamapps\common\Total War WARHAMMER III\ceb_native_bridge.dll" -Algorithm SHA256
 ```
 
-The result must match the DLL SHA-256 published in the [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) for that version. For version 1.1:
+The result must match the DLL SHA-256 published in the [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) for that version. For version 1.1.1:
 
 | File | SHA-256 |
 |---|---|
-| `ceb_native_bridge.dll` | `3b5a59ec4d675bf08222ad55d408436a5bde44ed0b0a25e2358c74c51364039b` |
-| `coop_event_battles.pack` | `88dbe376b9ce2eddb69df73ea93c1e308d0fef4dd33acc22ad887cac07e5b86f` |
+| `ceb_native_bridge.dll` | `102827b8b0c73e7890bbd49de807462d0eb66e33d49e86d5d7770f2b4baa3a20` |
+| `coop_event_battles.pack` | `be817a1d7333bb0386a6ce57e64c6c07d5c1ab5d2f3b66401a69ec2db2d19f86` |
 
-[`release/1.1/native_build.json`](release/1.1/native_build.json) records the hash of the source files that DLL was built from. The GitHub Actions workflow builds the DLL from this code on every change and shows its hash.
+[`release/1.1.1/native_build.json`](release/1.1.1/native_build.json) records the hash of the source files that DLL was built from. The GitHub Actions workflow builds the DLL from this code on every change and shows its hash.
 
 Antivirus software may flag the DLL because it is not digitally signed.
 

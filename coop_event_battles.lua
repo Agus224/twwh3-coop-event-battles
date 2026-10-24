@@ -68,15 +68,48 @@ local ceb = {
 -- LOGGING
 -----------------------------------------------------------------------------------
 
+-- Keeps a log file small: when it passes max_bytes it is cut down to its last keep_bytes
+-- (starting at a whole line), so the most recent history stays for bug reports.
+function ceb.trim_log(path, max_bytes, keep_bytes)
+	local f = io.open(path, "rb")
+	if not f then return 0 end
+	local size = f:seek("end") or 0
+	if size <= max_bytes then f:close(); return size end
+	f:seek("set", size - keep_bytes)
+	local tail = f:read("*a") or ""
+	f:close()
+	local nl = string.find(tail, "\n")
+	if nl then tail = string.sub(tail, nl + 1) end
+	tail = "---- older lines removed (log limit " .. math.floor(max_bytes / 1024) .. " KB) ----\n" .. tail
+	f = io.open(path, "wb")
+	if not f then return size end
+	f:write(tail)
+	f:close()
+	return #tail
+end
+
+ceb.log_file = "coop_event_battles_log.txt"
+ceb.log_max = 512 * 1024   -- the log never grows past ~512 KB
+ceb.log_keep = 128 * 1024  -- when trimmed, the last ~128 KB are kept
+
 function ceb:log(msg)
 	msg = "[CoopEventBattles] " .. tostring(msg)
 	if out then out(msg) end
 	if self.config.debug then
 		pcall(function()
-			local f = io.open("coop_event_battles_log.txt", "a")
+			local line = os.date("%H:%M:%S") .. " " .. msg .. "\n"
+			if not self.log_size or self.log_size > self.log_max then
+				local first = self.log_size == nil
+				self.log_size = ceb.trim_log(self.log_file, self.log_max, self.log_keep)
+				if first then
+					line = os.date("\n==== %Y-%m-%d %H:%M:%S ") .. "Co-op Event Battles " .. tostring(self.version) .. " ====\n" .. line
+				end
+			end
+			local f = io.open(self.log_file, "a")
 			if f then
-				f:write(os.date("%H:%M:%S") .. " " .. msg .. "\n")
+				f:write(line)
 				f:close()
+				self.log_size = self.log_size + #line
 			end
 		end)
 	end
