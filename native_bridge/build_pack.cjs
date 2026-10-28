@@ -11,6 +11,9 @@ const sha256 = file => crypto.createHash('sha256').update(fs.readFileSync(file))
 const members = {
   'script/campaign/mod/coop_event_battles.lua': fs.readFileSync(path.join(base, 'campaign_bridge.lua')),
 };
+// Battle side (1.1.2): CA's gb:get_army fails when the ally's unnamed army joins the player's
+// alliance; without this, quest scripts die after fading the intro out (black screen).
+members['script/battle/mod/coop_event_battles_battle.lua'] = fs.readFileSync(path.join(base, 'battle_fix.lua'));
 members['ui/common ui/ceb_army_picker.twui.xml'] = fs.readFileSync(path.join(base, '../ui_src/ceb_army_picker.twui.xml'));
 // Do not ship script/enable_console_logging: it makes the game write a new script_log_*.txt
 // in the game folder on every launch, and those files are never cleaned up (1.1.1).

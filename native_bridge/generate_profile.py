@@ -1,10 +1,11 @@
 """Generate a reviewable profile for the one analyzed executable; no game writes."""
+import os
 from pathlib import Path
 import hashlib,json,sys
 import pefile
 
 root=Path(__file__).resolve().parent
-target=root.parent.parent/'Warhammer3.exe'
+target=Path(os.environ.get('WH3_GAME_DIR', r'C:\Program Files (x86)\Steam\steamapps\common\Total War WARHAMMER III'))/'Warhammer3.exe'
 data=target.read_bytes()
 expected='9bd58c63bd7fc5c9909b3d3d9b6b7a6ae4eac784369bf91a9e53c3e9f42be496'
 actual=hashlib.sha256(data).hexdigest()

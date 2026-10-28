@@ -1,4 +1,5 @@
 """Validate the built DLL outside the game; never loads it into Warhammer3."""
+import os
 from pathlib import Path
 import ctypes,hashlib,json
 import pefile
@@ -34,7 +35,7 @@ check('Native ABI version is 1',module.ceb_bridge_abi_version()==1)
 check('Rejects non-game host',module.ceb_bridge_host_supported()==0)
 check('Rejects null Lua state',module.luaopen_ceb_native_bridge(None)==0)
 profile=json.loads((root/'native_profile.json').read_text())
-exe=root.parent.parent/'Warhammer3.exe'
+exe=Path(os.environ.get('WH3_GAME_DIR', r'C:\Program Files (x86)\Steam\steamapps\common\Total War WARHAMMER III'))/'Warhammer3.exe'
 exe_data=exe.read_bytes();exe_pe=pefile.PE(data=exe_data,fast_load=True)
 check('Profile matches analyzed executable SHA256',hashlib.sha256(exe_data).hexdigest()==profile['exe_sha256'])
 check('Fourteen native entry signatures match file',len(profile['functions'])==14 and all(

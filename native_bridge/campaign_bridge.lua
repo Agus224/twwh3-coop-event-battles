@@ -1,10 +1,10 @@
--- Co-op Event Battles native companion 1.1.1.
+-- Co-op Event Battles native companion 1.1.2.
 -- Real campaign army connection: no unit copies, loans or result emulation. The army is teleported
 -- beside the host (and back after the battle), like the game's quest teleport.
 -- Requires the same supported native DLL and companion on every human client.
 -- Release based on the pack verified by the user in single-player and multiplayer.
 local ceb = {
-	version = "1.1.1",
+	version = "1.1.2",
     protocol = "1",
     peers = {},
     legacy_loans = {},

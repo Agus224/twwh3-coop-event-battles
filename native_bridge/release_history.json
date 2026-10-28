@@ -10,5 +10,11 @@
     "content_sha256": "ada9b9facd16220b4f0bbd3a229c4cef586e44b75873411453e4677e0b6a8fc8",
     "pack_sha256": "be817a1d7333bb0386a6ce57e64c6c07d5c1ab5d2f3b66401a69ec2db2d19f86",
     "dll_sha256": "102827b8b0c73e7890bbd49de807462d0eb66e33d49e86d5d7770f2b4baa3a20"
+  },
+  "1.1.2": {
+    "build": "fc209784",
+    "content_sha256": "fc209784f34bb5c0f150bf743e2b4226a63b5f581d5fcb2f24b8229d2fe77eb5",
+    "pack_sha256": "15d3ae3e59a5fa674ff5d67bec162eb1c6f9afb05fbb8772771a19427eccb214",
+    "dll_sha256": "167e24e406b9462738c555aa14d1838beb900dea6a80c28f70f56799f74fe95e"
   }
 }
