@@ -7,18 +7,20 @@ import pefile
 root=Path(__file__).resolve().parent
 target=Path(os.environ.get('WH3_GAME_DIR', r'C:\Program Files (x86)\Steam\steamapps\common\Total War WARHAMMER III'))/'Warhammer3.exe'
 data=target.read_bytes()
-expected='9bd58c63bd7fc5c9909b3d3d9b6b7a6ae4eac784369bf91a9e53c3e9f42be496'
+# Patch 9.0.5 (Steam build 26403568). The 1.1.2 profile was 9bd58c63... (build 25961564);
+# every function below is byte-identical to that build except for relocated call targets.
+expected='d2a8a58288bf8bd86768f21ff6be036cebb1916f9c312999c60afc1abe13789f'
 actual=hashlib.sha256(data).hexdigest()
 if actual!=expected: raise SystemExit('Executable differs from analyzed version; profile not generated')
 pe=pefile.PE(data=data,fast_load=True)
 entries={
-    'allocate':0x004d3da0,'release':0x004e98d4,
-    'destroy_cohort':0x02676658,'construct_cohort':0x026687b4,
-    'append_cohort':0x02642468,'prepare_character':0x026b5c78,
-    'observe_force':0x01c3adf0,'initialize_cohort':0x0269af00,
-    'lookup_force':0x01c6a30c,'at_war':0x026ba60c,
-    'reinforcement_direction':0x02692774,
-    'make_force_data':0x02669900,'push_force_data':0x0263f6b0,'destroy_force_data':0x02676720,
+    'allocate':0x004f38e0,'release':0x00509184,
+    'destroy_cohort':0x0267c988,'construct_cohort':0x0266eb78,
+    'append_cohort':0x02648688,'prepare_character':0x026bbec8,
+    'observe_force':0x01c41354,'initialize_cohort':0x026a1264,
+    'lookup_force':0x01c705e0,'at_war':0x026c0848,
+    'reinforcement_direction':0x02698abc,
+    'make_force_data':0x0266fcc4,'push_force_data':0x026458c0,'destroy_force_data':0x0267ca50,
 }
 manifest={'exe_sha256':actual,'image_size':pe.OPTIONAL_HEADER.SizeOfImage,
           'timestamp':pe.FILE_HEADER.TimeDateStamp,'functions':{}}

@@ -19,7 +19,7 @@ El juego arma la lista de participantes de una batalla de misión una sola vez y
 **Hace:**
 - Se carga desde el script del mod con `package.loadlib` (la función de Lua que el juego deja disponible).
 - Antes de hacer nada, comprueba que el ejecutable sea **exactamente** el analizado:
-  - SHA-256 de `Warhammer3.exe` = `9bd58c63bd7fc5c9909b3d3d9b6b7a6ae4eac784369bf91a9e53c3e9f42be496`;
+  - SHA-256 de `Warhammer3.exe` = `d2a8a58288bf8bd86768f21ff6be036cebb1916f9c312999c60afc1abe13789f`;
   - tamaño de imagen y fecha del ejecutable;
   - 14 firmas de 24 bytes de las funciones que usa ([`native_profile.json`](native_bridge/native_profile.json)).
 
@@ -65,14 +65,14 @@ Después de cargar una campaña cooperativa con el mod, en PowerShell:
 Get-FileHash "C:\Program Files (x86)\Steam\steamapps\common\Total War WARHAMMER III\ceb_native_bridge.dll" -Algorithm SHA256
 ```
 
-El resultado tiene que coincidir con el SHA-256 de la DLL publicado en la [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) de esa versión. Para la versión 1.1.2:
+El resultado tiene que coincidir con el SHA-256 de la DLL publicado en la [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) de esa versión. Para la versión 1.1.3:
 
 | Archivo | SHA-256 |
 |---|---|
-| `ceb_native_bridge.dll` | `167e24e406b9462738c555aa14d1838beb900dea6a80c28f70f56799f74fe95e` |
-| `coop_event_battles.pack` | `15d3ae3e59a5fa674ff5d67bec162eb1c6f9afb05fbb8772771a19427eccb214` |
+| `ceb_native_bridge.dll` | `426ea2e8275b544d130c7051dae38c66eecf4f5b45b763478c3b810933eef6e0` |
+| `coop_event_battles.pack` | `a3edb4ba1f9d850d91f59bdd681b64cc51d586e5f50989c8548f71ee6ae1eb3a` |
 
-[`release/1.1.2/native_build.json`](release/1.1.2/native_build.json) registra el hash de los archivos fuente con los que se compiló esa DLL. El workflow de GitHub Actions compila la DLL desde este código en cada cambio y muestra su hash.
+[`release/1.1.3/native_build.json`](release/1.1.3/native_build.json) registra el hash de los archivos fuente con los que se compiló esa DLL. El workflow de GitHub Actions compila la DLL desde este código en cada cambio y muestra su hash.
 
 Los antivirus pueden marcar la DLL porque no está firmada digitalmente.
 
@@ -127,7 +127,7 @@ The game builds the participant list of a mission battle once and never recalcul
 **It does:**
 - It is loaded from the mod's script with `package.loadlib` (the Lua function the game leaves available).
 - Before doing anything, it checks that the executable is **exactly** the analyzed one:
-  - SHA-256 of `Warhammer3.exe` = `9bd58c63bd7fc5c9909b3d3d9b6b7a6ae4eac784369bf91a9e53c3e9f42be496`;
+  - SHA-256 of `Warhammer3.exe` = `d2a8a58288bf8bd86768f21ff6be036cebb1916f9c312999c60afc1abe13789f`;
   - image size and timestamp of the executable;
   - 14 signatures of 24 bytes for the functions it uses ([`native_profile.json`](native_bridge/native_profile.json)).
 
@@ -173,14 +173,14 @@ After loading a co-op campaign with the mod, in PowerShell:
 Get-FileHash "C:\Program Files (x86)\Steam\steamapps\common\Total War WARHAMMER III\ceb_native_bridge.dll" -Algorithm SHA256
 ```
 
-The result must match the DLL SHA-256 published in the [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) for that version. For version 1.1.2:
+The result must match the DLL SHA-256 published in the [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) for that version. For version 1.1.3:
 
 | File | SHA-256 |
 |---|---|
-| `ceb_native_bridge.dll` | `167e24e406b9462738c555aa14d1838beb900dea6a80c28f70f56799f74fe95e` |
-| `coop_event_battles.pack` | `15d3ae3e59a5fa674ff5d67bec162eb1c6f9afb05fbb8772771a19427eccb214` |
+| `ceb_native_bridge.dll` | `426ea2e8275b544d130c7051dae38c66eecf4f5b45b763478c3b810933eef6e0` |
+| `coop_event_battles.pack` | `a3edb4ba1f9d850d91f59bdd681b64cc51d586e5f50989c8548f71ee6ae1eb3a` |
 
-[`release/1.1.2/native_build.json`](release/1.1.2/native_build.json) records the hash of the source files that DLL was built from. The GitHub Actions workflow builds the DLL from this code on every change and shows its hash.
+[`release/1.1.3/native_build.json`](release/1.1.3/native_build.json) records the hash of the source files that DLL was built from. The GitHub Actions workflow builds the DLL from this code on every change and shows its hash.
 
 Antivirus software may flag the DLL because it is not digitally signed.
 

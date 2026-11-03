@@ -1,6 +1,6 @@
 {
-  "dll_sha256": "167e24e406b9462738c555aa14d1838beb900dea6a80c28f70f56799f74fe95e",
-  "exe_sha256": "9bd58c63bd7fc5c9909b3d3d9b6b7a6ae4eac784369bf91a9e53c3e9f42be496",
+  "dll_sha256": "426ea2e8275b544d130c7051dae38c66eecf4f5b45b763478c3b810933eef6e0",
+  "exe_sha256": "d2a8a58288bf8bd86768f21ff6be036cebb1916f9c312999c60afc1abe13789f",
   "tests": [
     {
       "name": "AMD64 DLL",
