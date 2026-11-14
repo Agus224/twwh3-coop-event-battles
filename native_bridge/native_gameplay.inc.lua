@@ -122,7 +122,8 @@ end
 
 function ceb:add_note_listeners()
     core:add_listener("ceb_note_PanelClosed", "PanelClosedCampaign", function(context)
-        return context.string == "popup_pre_battle"
+        -- The host's refresh (1.1.9) closes and reopens the panel: keep the note across it.
+        return context.string == "popup_pre_battle" and not self.pre_battle_refreshing
     end, function() self:ui_close_reinforcement_note() end, true)
     core:add_listener("ceb_note_BattleCompleted", "ScriptEventBattleSequenceCompleted", true, function()
         self:ui_close_reinforcement_note()
@@ -177,8 +178,22 @@ function ceb:finish_proposal(success, detail)
     s.proposal = nil
     if not self:list_contains(s.responded, p.faction) then table.insert(s.responded, p.faction) end
     self:log("Proposal " .. p.id .. " completed success=" .. tostring(success) .. " detail=" .. tostring(detail))
-    if not self.reload_required then
-        self:ui_notify_participants(string.format(self:txt(success and "joined" or "join_failed"), self:faction_display_name(p.faction)))
+    if success then
+        -- Every client records it; only the ally's own client acts on it after the battle (1.1.6).
+        self.joined_allies = self.joined_allies or {}
+        self.joined_allies[p.faction] = true
+        if p.faction == self:local_faction_key() then
+            local ok, err = pcall(function() self:start_ally_pre_battle_check() end)
+            if not ok then self:log("Ally pre-battle check error: " .. tostring(err)) end
+        elseif s.host_faction == self:local_faction_key() then
+            local ok, err = pcall(function() self:start_host_pre_battle_refresh() end)
+            if not ok then self:log("Host pre-battle refresh error: " .. tostring(err)) end
+        end
+    end
+    -- 1.1.11: no centered popup on success; the refreshed pre-battle screen, the reinforcement note and
+    -- the camera already show the join. Failures still get the popup.
+    if not success and not self.reload_required then
+        self:ui_notify_participants(string.format(self:txt("join_failed"), self:faction_display_name(p.faction)))
     end
     self:check_session_complete()
     if not s.closed and not self.reload_required and s.pending_join_queue and #s.pending_join_queue > 0 then

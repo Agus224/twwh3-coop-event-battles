@@ -38,7 +38,7 @@ profile=json.loads((root/'native_profile.json').read_text())
 exe=Path(os.environ.get('WH3_GAME_DIR', r'C:\Program Files (x86)\Steam\steamapps\common\Total War WARHAMMER III'))/'Warhammer3.exe'
 exe_data=exe.read_bytes();exe_pe=pefile.PE(data=exe_data,fast_load=True)
 check('Profile matches analyzed executable SHA256',hashlib.sha256(exe_data).hexdigest()==profile['exe_sha256'])
-check('Fourteen native entry signatures match file',len(profile['functions'])==14 and all(
+check('Eighteen native entry signatures match file',len(profile['functions'])==18 and all(
     exe_data[exe_pe.get_offset_from_rva(int(item['rva'],16)):][:24].hex()==item['signature']
     for item in profile['functions'].values()))
 result={'dll_sha256':hashlib.sha256(data).hexdigest(),'exe_sha256':profile['exe_sha256'],

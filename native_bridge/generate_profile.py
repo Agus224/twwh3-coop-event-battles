@@ -21,6 +21,13 @@ entries={
     'lookup_force':0x01c705e0,'at_war':0x026c0848,
     'reinforcement_direction':0x02698abc,
     'make_force_data':0x0266fcc4,'push_force_data':0x026458c0,'destroy_force_data':0x0267ca50,
+    # 1.1.6: 0x141ea2e14(campaign_ui) opens popup_battle_results when the local faction must choose,
+    # and 0x141c309ca is 'mov [rip+disp], rcx' storing campaign_ui+0x30 in the global 0x143f74188.
+    'open_battle_results':0x01ea2e14,'campaign_ui_store':0x01c309ca,
+    # 1.1.7: 0x142910fa8(pending+0x178) rebuilds the per-client list of players who choose the results.
+    'rebuild_choosers':0x02910fa8,
+    # 1.1.8: 0x141ea2fa4(campaign_ui) opens popup_pre_battle when 0x1426e9474 holds.
+    'open_pre_battle':0x01ea2fa4,
 }
 manifest={'exe_sha256':actual,'image_size':pe.OPTIONAL_HEADER.SizeOfImage,
           'timestamp':pe.FILE_HEADER.TimeDateStamp,'functions':{}}

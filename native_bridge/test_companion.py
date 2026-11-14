@@ -56,7 +56,7 @@ cm={game_interface={},is_multiplayer=function() return true end,model=function()
  find_valid_spawn_location_for_character_from_character=function(_,faction,host_str,same_region,distance) return 101,102 end,
  teleport_to=function(_,who,x,y) table.insert(teleports,who..'@'..x..','..y..'#'..(calls.join or 0)) end}
 teleports={}
-core={add_listener=function(_,name,event,condition,callback) listeners[name]={event=event,callback=callback} end}
+core={add_listener=function(_,name,event,condition,callback) listeners[name]={event=event,condition=condition,callback=callback} end}
 CampaignUI={TriggerCampaignScriptEvent=function(cqi,t) table.insert(sent,{cqi,t}) end}
 common={get_localised_string=function(key) return key end,set_context_value=function() end}
 out=function() end
@@ -218,6 +218,13 @@ class CompanionTests(unittest.TestCase):
         self.assertTrue(self.lua.eval('ceb.reload_required'))
         self.assertEqual(self.lua.eval('calls.join'), 1)
 
+    def test_join_success_shows_no_popup_but_failure_does(self):
+        self.lua.execute("cm.real_callback=function() end; cm.remove_real_callback=function() end; ceb.check_session_complete=function() end; ceb.session={id='s',host_faction='host',responded={}}")
+        self.lua.execute("notices=0; ceb.session.proposal={id='p1',faction='ally'}; ceb:finish_proposal(true,'joined')")
+        self.assertEqual(self.lua.eval('notices'), 0)
+        self.lua.execute("ceb.session.closed=false; ceb.session.proposal={id='p2',faction='ally'}; ceb:finish_proposal(false,'x')")
+        self.assertEqual(self.lua.eval('notices'), 1)
+
     def test_two_clients_commit_on_same_last_ack_event(self):
         first = self.lua
         self.setUp()
@@ -303,6 +310,201 @@ class CompanionTests(unittest.TestCase):
         self.lua.execute("ceb.ui_close_reinforcement_note=function() ceb.reinforcement_notes={} end")
         self.lua.execute("listeners.ceb_note_PanelClosed.callback({string='popup_pre_battle'})")
         self.assertEqual(self.lua.eval('#ceb.reinforcement_notes'), 0)
+
+    # 1.1.4: battle sequence trace for the co-op autoresolve report (13-nov-2026).
+    def trace_harness(self):
+        self.lua.execute('''
+        traces={}; ceb.log=function(_,m) table.insert(traces,m) end
+        watch=nil; cm.repeat_real_callback=function(_,f,ms,name) watch=f end
+        removed=nil; cm.remove_real_callback=function(_,name) removed=name end
+        pb.is_auto_resolved=function() return true end
+        local function comp(id,vis) return {Visible=function() return vis end,Id=function() return id end} end
+        local kids={comp('popup_battle_results',true),comp('hidden_panel',false),comp('mp_pending_action_blocking_msg',true)}
+        core.get_ui_root=function() return {ChildCount=function() return #kids end,Find=function(_,i) return kids[i+1] end} end
+        UIComponent=function(c) return c end
+        ceb:add_battle_trace()
+        function has(sub) for _,m in ipairs(traces) do if string.find(m,sub,1,true) then return true end end return false end
+        ''')
+
+    def test_trace_follows_a_mission_battle_until_the_sequence_ends(self):
+        self.trace_harness()
+        self.lua.execute("listeners.ceb_trace_PendingBattle.callback({pending_battle=function() return pb end})")
+        self.assertTrue(self.lua.eval('ceb.battle_trace'))
+        self.assertTrue(self.lua.eval('has("TRACE PendingBattle local=host pb[active=true autoresolved=true")'))
+        self.lua.execute("listeners.ceb_trace_PanelOpenedCampaign.callback({string='popup_pre_battle'})")
+        self.lua.execute("listeners.ceb_trace_click.callback({string='button_autoresolve'})")
+        self.lua.execute("listeners.ceb_trace_CharacterCompletedBattle.callback({character=function() return ally end})")
+        self.lua.execute("listeners.ceb_trace_BattleConflictFinished.callback({})")
+        self.assertTrue(self.lua.eval('has("TRACE PanelOpenedCampaign [popup_pre_battle]")'))
+        self.assertTrue(self.lua.eval('has("TRACE click [button_autoresolve]")'))
+        self.assertTrue(self.lua.eval('has("TRACE CharacterCompletedBattle char=20 faction=ally")'))
+        self.assertIsNotNone(self.lua.eval('watch'), 'the watch starts once the battle is resolved')
+        self.lua.execute("watch()")
+        self.assertTrue(self.lua.eval('has("watch +10s visible=[popup_battle_results,mp_pending_action_blocking_msg]")'))
+        self.lua.execute("listeners.ceb_trace_BattleSequenceCompleted.callback({})")
+        self.assertFalse(self.lua.eval('ceb.battle_trace'))
+        self.lua.execute("watch()")
+        self.assertEqual(self.lua.eval('removed'), 'ceb_trace_watch', 'the watch stops with the sequence')
+
+    def test_trace_ignores_normal_battles(self):
+        self.trace_harness()
+        self.lua.execute("pb.set_piece_battle_key=function() return '' end; pb.quest_mission_key=function() return '' end")
+        self.lua.execute("listeners.ceb_trace_PendingBattle.callback({pending_battle=function() return pb end})")
+        self.assertFalse(self.lua.eval('ceb.battle_trace'))
+        self.assertFalse(self.lua.eval('listeners.ceb_trace_PanelOpenedCampaign and false or false'))
+        self.assertEqual(self.lua.eval('#traces'), 0)
+
+    # 1.1.4: the host's X on the wait dialog (CA's dialogue_box closes itself) stopped nothing and the
+    # watchdog rebuilt the dialog every second until the ally declined.
+    def watchdog_harness(self):
+        self.lua.execute('''
+        watchdog=nil; cm.repeat_real_callback=function(_,f,ms,name) if name=="ceb_dialog_watchdog" then watchdog=f end end
+        rebuilt=0; ceb.ui_build_host_dialog=function() rebuilt=rebuilt+1 end
+        closed=0; ceb.ui_close_host_wait=function() closed=closed+1; ceb.ui.open[ceb.host_dialog_name]=nil end
+        core.get_ui_root=function() return {} end
+        present=true; find_uicomponent=function() return present and {} or nil end
+        ceb.update_blocker_override=function() end
+        if not listeners.ceb_host_dialog_click then ceb:add_listeners() end
+        ''')
+        self.ready()
+        self.lua.execute("ceb.ui.open[ceb.host_dialog_name]=true; ceb.ui.watchdog_running=false; ceb:start_dialog_watchdog(); sent={}")
+
+    def test_host_x_on_wait_dialog_stops_waiting(self):
+        self.watchdog_harness()
+        self.lua.execute("listeners.ceb_host_dialog_click.callback({string='button_cancel'}); present=false; watchdog()")
+        self.assertEqual(self.lua.eval('rebuilt'), 0)
+        self.assertEqual(self.lua.eval('closed'), 1)
+        self.assertTrue(self.lua.eval("sent[1] and string.sub(sent[1][2],1,6)=='CEBN|C'"), 'stop-waiting sent')
+
+    def test_wait_dialog_destroyed_without_a_click_is_rebuilt(self):
+        self.watchdog_harness()
+        self.lua.execute("listeners.ceb_host_dialog_click.callback({string='somewhere'}); watchdog()")  # still there
+        self.lua.execute("present=false; watchdog()")
+        self.assertEqual(self.lua.eval('rebuilt'), 1)
+        self.assertEqual(self.lua.eval('closed'), 0)
+        self.assertEqual(self.lua.eval('#sent'), 0)
+
+    # 1.1.6: after an autoresolve the ally's client never opened popup_battle_results and the host
+    # waited forever for its choice.
+    def results_harness(self, local):
+        self.lua.execute('''
+        pending_cb=nil; cm.real_callback=function(_,f,ms,name) if name=="ceb_ally_results" then pending_cb=f end end
+        cm.remove_real_callback=function() end
+        core.get_ui_root=function() return {} end
+        panel=false; find_uicomponent=function(_,name) if name=="popup_battle_results" and panel then return {Visible=function() return true end} end end
+        calls={}; answer={code="opened",detail="x",opened=true}
+        ceb.native=ceb.native or {}; ceb.native.results=function(open) table.insert(calls,open); return answer end
+        if not listeners.ceb_ally_results_BattleConflictFinished then ceb:add_listeners() end
+        ceb.joined_allies={ally=true}
+        ''')
+        self.lua.execute("cm.get_local_faction_name=function() return '%s' end" % local)
+
+    def fire_conflict_finished(self):
+        self.lua.execute("local l=listeners.ceb_ally_results_BattleConflictFinished; if l.condition==true or l.condition({}) then l.callback({}) end")
+
+    def test_ally_client_opens_missing_results_after_autoresolve(self):
+        self.results_harness('ally')
+        self.fire_conflict_finished()
+        self.lua.execute("pending_cb()")
+        self.assertEqual(self.lua.eval('#calls'), 1)
+        self.assertEqual(self.lua.eval('calls[1]'), 2)
+        self.assertIsNone(self.lua.eval('ceb.results_watch'))
+
+    def test_ally_client_retries_until_the_game_is_ready(self):
+        self.results_harness('ally')
+        self.lua.execute('answer={code="results_not_ready",detail="state=1",opened=false}')
+        self.fire_conflict_finished()
+        self.lua.execute("pending_cb()")
+        self.lua.execute('answer={code="opened",detail="x",opened=true}; pending_cb()')
+        self.assertEqual(self.lua.eval('#calls'), 2)
+        self.assertIsNone(self.lua.eval('ceb.results_watch'))
+
+    def test_ally_client_does_nothing_when_results_are_shown(self):
+        self.results_harness('ally')
+        self.lua.execute('panel=true')
+        self.fire_conflict_finished()
+        self.lua.execute("pending_cb()")
+        self.assertEqual(self.lua.eval('#calls'), 0)
+
+    def test_host_client_never_opens_results(self):
+        self.results_harness('host')
+        self.fire_conflict_finished()
+        self.assertIsNone(self.lua.eval('pending_cb'))
+        self.assertEqual(self.lua.eval('#calls'), 0)
+
+    def test_host_client_only_reads_results_state(self):
+        self.results_harness('host')
+        self.lua.execute("ceb.session={host_faction='host'}")
+        l = "listeners.ceb_host_results_BattleConflictFinished"
+        self.lua.execute("local l=%s; if l.condition() then l.callback({}) end" % l)
+        self.lua.execute("pending_host=nil; cm.real_callback=function(_,f,ms,name) pending_host=f end; local l=%s; if l.condition() then l.callback({}) end; pending_host()" % l)
+        self.assertEqual(self.lua.eval('calls[1]'), 0)
+
+    def pre_battle_harness(self):
+        self.lua.execute('''
+        pre_cb=nil; cm.real_callback=function(_,f,ms,name) if name=="ceb_ally_pre_battle" then pre_cb=f end end
+        cm.remove_real_callback=function() end
+        core.get_ui_root=function() return {} end
+        pre_panel=false; find_uicomponent=function(_,name) if name=="popup_pre_battle" and pre_panel then return {Visible=function() return true end} end end
+        pre_calls={}; pre_answer={code="opened",detail="x",opened=true}
+        ceb.native=ceb.native or {}; ceb.native.prebattle=function(mode) table.insert(pre_calls,mode); return pre_answer end
+        ''')
+
+    def test_ally_client_opens_pre_battle_after_its_join(self):
+        self.pre_battle_harness()
+        self.lua.execute("ceb:start_ally_pre_battle_check(); pre_cb()")
+        self.assertEqual(self.lua.eval('#pre_calls'), 1)
+        self.assertEqual(self.lua.eval('pre_calls[1]'), 2)
+        self.assertIsNone(self.lua.eval('ceb.pre_battle_watch'))
+
+    def test_ally_pre_battle_stops_when_battle_already_resolved(self):
+        self.pre_battle_harness()
+        self.lua.execute('pre_answer={code="not_pre_battle",detail="state=8",opened=false}; ceb:start_ally_pre_battle_check(); pre_cb()')
+        self.assertEqual(self.lua.eval('#pre_calls'), 1)
+        self.assertIsNone(self.lua.eval('ceb.pre_battle_watch'))
+
+    def test_ally_pre_battle_skipped_when_already_visible(self):
+        self.pre_battle_harness()
+        self.lua.execute("pre_panel=true; ceb:start_ally_pre_battle_check(); pre_cb()")
+        self.assertEqual(self.lua.eval('#pre_calls'), 0)
+
+    def test_host_pre_battle_is_closed_and_reopened_keeping_the_note(self):
+        self.pre_battle_harness()
+        self.lua.execute('''
+        host_cbs={}; cm.real_callback=function(_,f,ms,name) table.insert(host_cbs,f) end
+        pre_panel=true; closed_panels={}; CampaignUI={ClosePanel=function(n) table.insert(closed_panels,n); pre_panel=false end}
+        notes_built=0; ceb.ui_build_reinforcement_note=function() notes_built=notes_built+1 end
+        ceb:start_host_pre_battle_refresh(); host_cbs[1]()
+        ''')
+        self.assertEqual(self.lua.eval('closed_panels[1]'), 'popup_pre_battle')
+        self.assertTrue(self.lua.eval('ceb.pre_battle_refreshing'))
+        self.assertEqual(self.lua.eval('pre_calls[1]'), 3)
+        self.lua.execute("host_cbs[2]()")
+        self.assertEqual(self.lua.eval('pre_calls[2]'), 2)
+        self.assertIsNone(self.lua.eval('ceb.pre_battle_refreshing'))
+        self.assertEqual(self.lua.eval('notes_built'), 1)
+
+    def test_host_syncs_choosers_even_without_panel(self):
+        self.pre_battle_harness()
+        self.lua.execute('''
+        host_cbs={}; cm.real_callback=function(_,f,ms,name) table.insert(host_cbs,f) end
+        pre_panel=false; CampaignUI={ClosePanel=function() error('must not close') end}
+        ceb:start_host_pre_battle_refresh(); host_cbs[1]()
+        ''')
+        self.assertEqual(self.lua.eval('pre_calls[1]'), 3)
+        self.assertEqual(self.lua.eval('#host_cbs'), 1)
+
+    def test_ally_camera_moves_to_host_when_pre_battle_opens(self):
+        self.pre_battle_harness()
+        self.lua.execute('''
+        moved=nil; cm.get_camera_position=function() return 1,2,3,4,5 end
+        cm.scroll_camera_from_current=function(_,c,t,pos) moved=pos end
+        ceb.session={host_cqi=8}; ceb.get_char=function(_,cqi) return {display_position_x=function() return 100 end, display_position_y=function() return 200 end} end
+        ceb:start_ally_pre_battle_check(); pre_cb()
+        ''')
+        self.assertEqual(self.lua.eval('moved[1]'), 100)
+        self.assertEqual(self.lua.eval('moved[2]'), 200)
+        self.assertEqual(self.lua.eval('moved[3]'), 3)
 
     def test_ally_client_gets_no_reinforcement_note(self):
         self.lua.execute("cm.get_local_faction_name=function() return 'ally' end; cm.get_local_faction=function() return fb end")

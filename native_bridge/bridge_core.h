@@ -60,6 +60,13 @@ CebResult ceb_join(const CebEngine *,CebPtr,uint32_t,uint32_t);
  * engine looks up a cohort by each army's faction (0x1426ac2b4), so an army of another faction
  * attached to the host cohort crashes the game (null cohort at 0x1420d14c1, seen in game). */
 #define CEB_FLAG_OTHER_FACTION_TEST 4u
+#ifdef CEB_TEST_BUILD
+/* Test builds only, with OTHER_FACTION_TEST (mode 12): after the ally's own cohort is initialized,
+ * copy the host primary cohort's deployment byte (+0x3ad) onto it and report the bytes before/after.
+ * Attaching another faction to the host cohort (mode 6) crashes: 0x1420d64ac looks up the cohort of
+ * each army's faction (0x1426b2570) and reads +0x360 of the result without a null check. */
+#define CEB_FLAG_TEST_DEPLOY_AT_START 8u
+#endif
 CebResult ceb_inspect_ex(const CebEngine *,CebPtr,uint32_t,uint32_t,uint32_t);
 CebResult ceb_join_ex(const CebEngine *,CebPtr,uint32_t,uint32_t,uint32_t);
 #endif

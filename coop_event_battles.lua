@@ -786,6 +786,15 @@ function ceb:start_dialog_watchdog()
 						if name == self.invite_dialog_name and self.session then
 							self:log("Invite dialog disappeared, rebuilding it")
 							self:ui_build_invite_dialog()
+						elseif name == self.host_dialog_name and self.session and self.ui.host_dialog_clicked then
+							-- The wait dialog uses CA's dialogue_box, which closes itself on its X before
+							-- our click handler can see it. A click on it followed by its disappearance is
+							-- the host closing it: stop waiting instead of rebuilding it every second.
+							self:log("Host closed the wait dialog (" .. tostring(self.ui.host_dialog_clicked) .. "), stopping the wait")
+							self.ui.host_dialog_clicked = nil
+							local session_id = self.session.id
+							self:ui_close_host_wait()
+							self:send("C|" .. session_id)
 						elseif name == self.host_dialog_name and self.session then
 							self:log("Host dialog disappeared, rebuilding it")
 							self:ui_build_host_dialog()
@@ -793,6 +802,7 @@ function ceb:start_dialog_watchdog()
 					end
 				end
 			end
+			self.ui.host_dialog_clicked = nil
 			self:update_blocker_override()
 			if not any_open then
 				cm:remove_real_callback("ceb_dialog_watchdog")

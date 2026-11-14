@@ -9,6 +9,9 @@ static char core_diag[192];
 static CebPtr ptr(CebPtr p) { CebPtr v; memcpy(&v,(void *)p,sizeof(v)); return v; }
 static uint32_t u32(CebPtr p) { uint32_t v; memcpy(&v,(void *)p,sizeof(v)); return v; }
 static unsigned char u8(CebPtr p) { unsigned char v; memcpy(&v,(void *)p,1); return v; }
+#ifdef CEB_TEST_BUILD
+static char ceb_test_detail[256];
+#endif
 static CebResult fail(CebResult r,const char *code,const char *detail) { r.ok=0;r.code=code;r.detail=detail;return r; }
 static int valid(const CebEngine *e,CebPtr p,size_t n) { return p>0xffff && n && e->readable(p,n); }
 static CebPtr faction(const CebEngine *e,CebPtr force) {
@@ -82,7 +85,14 @@ CebResult ceb_inspect_ex(const CebEngine *e,CebPtr model,uint32_t host_id,uint32
     host_faction=faction(e,host);ally_faction=faction(e,ally);
     /* Accepted modes: 0 co-op (own cohort), 3 same-faction attach (single player),
      * 4 other-faction own cohort (single-player test of the co-op path). */
-    if(flags!=0 && flags!=(CEB_FLAG_SAME_FACTION|CEB_FLAG_ATTACH) && flags!=CEB_FLAG_OTHER_FACTION_TEST)
+    if(flags!=0 && flags!=(CEB_FLAG_SAME_FACTION|CEB_FLAG_ATTACH) && flags!=CEB_FLAG_OTHER_FACTION_TEST
+#ifdef CEB_TEST_BUILD
+       /* Test builds only: another faction's army attached to the host cohort (deploys with the host,
+        * like a garrison). Known to have crashed in October; built to reproduce it on 9.0.5. */
+       && flags!=(CEB_FLAG_ATTACH|CEB_FLAG_OTHER_FACTION_TEST)
+       && flags!=(CEB_FLAG_OTHER_FACTION_TEST|CEB_FLAG_TEST_DEPLOY_AT_START)
+#endif
+       )
         return fail(r,"invalid_flags","Unknown join mode");
     /* faction+0x1bc4 is the controller type. The engine treats values below 2 as human
      * (0x1426acfea: cmp 2 / jae) and 0 as the local human (0x1426b5c8c: cmp 0 / sete): in single
@@ -236,6 +246,17 @@ CebResult ceb_join_ex(const CebEngine *e,CebPtr model,uint32_t host_id,uint32_t 
     }
     r.changed=1;
     e->initialize_cohort(cohort,r.pending);
+#ifdef CEB_TEST_BUILD
+    {
+        CebPtr host_cohort=r.alliance+8;
+        unsigned h20=u8(host_cohort+0x20),h21=u8(host_cohort+0x21),h3ad=u8(host_cohort+0x3ad);
+        unsigned a20=u8(cohort+0x20),a21=u8(cohort+0x21),a3ad=u8(cohort+0x3ad);
+        if(flags&CEB_FLAG_TEST_DEPLOY_AT_START) *(unsigned char *)(cohort+0x3ad)=(unsigned char)h3ad;
+        snprintf(ceb_test_detail,sizeof(ceb_test_detail),
+            "TEST host cohort +20=%u +21=%u +3ad=%u; ally cohort +20=%u +21=%u +3ad=%u -> +3ad=%u (deploy flag %s)",
+            h20,h21,h3ad,a20,a21,a3ad,u8(cohort+0x3ad),(flags&CEB_FLAG_TEST_DEPLOY_AT_START)?"on":"off");
+    }
+#endif
     if(!count_side(e,r.alliance,r.ally_force,&total,&found) || !found ||
        ptr(cohort+0x370)!=r.ally_force || u32(r.ally_force+0x6d4)!=ally_units || u32(r.host_force+0x6d4)!=host_units ||
        memcmp(&temporary,(void *)(model+0x7350),sizeof(temporary)) ||
@@ -251,5 +272,8 @@ CebResult ceb_join_ex(const CebEngine *e,CebPtr model,uint32_t host_id,uint32_t 
     *(unsigned char *)(r.pending+0x2b7)=1;
     r.participants_after=total;
     r.code="joined";r.detail="Real army appended; pending battle refresh requested";
+#ifdef CEB_TEST_BUILD
+    r.detail=ceb_test_detail; /* the test bytes go to the native log and the Lua result */
+#endif
     return r;
 }

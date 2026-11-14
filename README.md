@@ -21,10 +21,11 @@ El juego arma la lista de participantes de una batalla de misión una sola vez y
 - Antes de hacer nada, comprueba que el ejecutable sea **exactamente** el analizado:
   - SHA-256 de `Warhammer3.exe` = `d2a8a58288bf8bd86768f21ff6be036cebb1916f9c312999c60afc1abe13789f`;
   - tamaño de imagen y fecha del ejecutable;
-  - 14 firmas de 24 bytes de las funciones que usa ([`native_profile.json`](native_bridge/native_profile.json)).
+  - 18 firmas de 24 bytes de las funciones que usa ([`native_profile.json`](native_bridge/native_profile.json)).
 
   Si algo no coincide (por ejemplo, después de una actualización del juego), se desactiva y el mod solo informa que no está disponible.
 - Lee las estructuras de la batalla pendiente, valida el ejército elegido y, si todo es correcto, llama a las funciones del juego que crean un participante. Después pide al juego que actualice la batalla pendiente.
+- En la PC del aliado abre la pantalla previa y la de resultados con las funciones del propio juego (si no, el aliado no podía votar y el anfitrión quedaba esperando después de un autoresolve), y en las dos PCs rearma la lista de quién elige con la función del juego, para que coincidan.
 - Toda lectura de memoria pasa antes por `VirtualQuery`, y las llamadas están protegidas con manejo de excepciones (SEH).
 
 **No hace:**
@@ -33,20 +34,23 @@ El juego arma la lista de participantes de una batalla de misión una sola vez y
 - No usa red y no toca el anti-copia. Los únicos archivos que abre son `Warhammer3.exe` (para calcular su SHA-256) y su propio log, `coop_event_battles_native_log.txt`.
 - Solo importa `KERNEL32.dll` y `bcrypt.dll` (para el SHA-256).
 
-Exporta tres funciones: `luaopen_ceb_native_bridge`, `ceb_bridge_abi_version` y `ceb_bridge_host_supported`. Desde Lua expone `status()`, `inspect()` (solo lectura) y `join()`.
+Exporta tres funciones: `luaopen_ceb_native_bridge`, `ceb_bridge_abi_version` y `ceb_bridge_host_supported`. Desde Lua expone `status()`, `inspect()` (solo lectura), `join()`, `prebattle()` y `results()`.
 
 ### Funciones del juego que usa
 
 | Nombre | RVA | Para qué |
 |---|---|---|
-| `allocate` / `release` | `0x4d3da0` / `0x4e98d4` | Reservar y liberar memoria con el asignador del juego |
-| `construct_cohort` / `destroy_cohort` | `0x26687b4` / `0x2676658` | Crear el participante de la facción aliada |
-| `append_cohort` | `0x2642468` | Agregarlo al bando del anfitrión |
-| `initialize_cohort` | `0x269af00` | Calcular su despliegue o llegada como refuerzo |
-| `prepare_character` / `observe_force` | `0x26b5c78` / `0x1c3adf0` | Registrar al general y al ejército en la batalla |
-| `lookup_force` / `at_war` | `0x1c6a30c` / `0x26ba60c` | Buscar el ejército por su ID y verificar que no estén en guerra |
-| `reinforcement_direction` | `0x2692774` | Dirección de llegada del ejército |
-| `make_force_data` / `push_force_data` / `destroy_force_data` | `0x2669900` / `0x263f6b0` / `0x2676720` | Ejército adicional de la misma facción (solo en la prueba de un jugador, desactivada) |
+| `allocate` / `release` | `0x4f38e0` / `0x509184` | Reservar y liberar memoria con el asignador del juego |
+| `construct_cohort` / `destroy_cohort` | `0x266eb78` / `0x267c988` | Crear el participante de la facción aliada |
+| `append_cohort` | `0x2648688` | Agregarlo al bando del anfitrión |
+| `initialize_cohort` | `0x26a1264` | Calcular su despliegue o llegada como refuerzo |
+| `prepare_character` / `observe_force` | `0x26bbec8` / `0x1c41354` | Registrar al general y al ejército en la batalla |
+| `lookup_force` / `at_war` | `0x1c705e0` / `0x26c0848` | Buscar el ejército por su ID y verificar que no estén en guerra |
+| `reinforcement_direction` | `0x2698abc` | Dirección de llegada del ejército |
+| `make_force_data` / `push_force_data` / `destroy_force_data` | `0x266fcc4` / `0x26458c0` / `0x267ca50` | Ejército adicional de la misma facción (solo en la prueba de un jugador, desactivada) |
+| `open_pre_battle` / `open_battle_results` | `0x1ea2fa4` / `0x1ea2e14` | Abrir la pantalla previa y la de resultados en la PC del aliado, con las funciones de la interfaz del juego |
+| `rebuild_choosers` | `0x2910fa8` | Rearmar la lista de jugadores que eligen en la batalla, para que el aliado figure y las dos PCs tengan la misma |
+| `campaign_ui_store` | `0x1c309ca` | Ubicar la interfaz de campaña (solo se lee la dirección) |
 
 ## Cómo llega la DLL a tu PC
 
@@ -65,14 +69,14 @@ Después de cargar una campaña cooperativa con el mod, en PowerShell:
 Get-FileHash "C:\Program Files (x86)\Steam\steamapps\common\Total War WARHAMMER III\ceb_native_bridge.dll" -Algorithm SHA256
 ```
 
-El resultado tiene que coincidir con el SHA-256 de la DLL publicado en la [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) de esa versión. Para la versión 1.1.3:
+El resultado tiene que coincidir con el SHA-256 de la DLL publicado en la [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) de esa versión. Para la versión 1.1.11:
 
 | Archivo | SHA-256 |
 |---|---|
-| `ceb_native_bridge.dll` | `426ea2e8275b544d130c7051dae38c66eecf4f5b45b763478c3b810933eef6e0` |
-| `coop_event_battles.pack` | `a3edb4ba1f9d850d91f59bdd681b64cc51d586e5f50989c8548f71ee6ae1eb3a` |
+| `ceb_native_bridge.dll` | `4027abc82542cf6189e260073c96a0b88e5bf3ea44a672473441526317ca348b` |
+| `coop_event_battles.pack` | `bce8c20e8f4d9dca56e71eb1aefc3b8692147a396185d376ea503b27832fc89a` |
 
-[`release/1.1.3/native_build.json`](release/1.1.3/native_build.json) registra el hash de los archivos fuente con los que se compiló esa DLL. El workflow de GitHub Actions compila la DLL desde este código en cada cambio y muestra su hash.
+[`release/1.1.11/native_build.json`](release/1.1.11/native_build.json) registra el hash de los archivos fuente con los que se compiló esa DLL. El workflow de GitHub Actions compila la DLL desde este código en cada cambio y muestra su hash.
 
 Los antivirus pueden marcar la DLL porque no está firmada digitalmente.
 
@@ -129,10 +133,11 @@ The game builds the participant list of a mission battle once and never recalcul
 - Before doing anything, it checks that the executable is **exactly** the analyzed one:
   - SHA-256 of `Warhammer3.exe` = `d2a8a58288bf8bd86768f21ff6be036cebb1916f9c312999c60afc1abe13789f`;
   - image size and timestamp of the executable;
-  - 14 signatures of 24 bytes for the functions it uses ([`native_profile.json`](native_bridge/native_profile.json)).
+  - 18 signatures of 24 bytes for the functions it uses ([`native_profile.json`](native_bridge/native_profile.json)).
 
   If anything differs (for example after a game update), it disables itself and the mod only reports that it is unavailable.
 - It reads the pending battle structures, validates the chosen army and, if everything is correct, calls the game functions that create a participant. Then it asks the game to refresh the pending battle.
+- On the ally's PC it opens the pre-battle and results screens with the game's own functions (otherwise the ally could not vote and the host was left waiting after an autoresolve), and on both PCs it rebuilds the list of who chooses with the game's function, so they match.
 - Every memory read is checked first with `VirtualQuery`, and the calls are guarded with structured exception handling (SEH).
 
 **It does not:**
@@ -141,20 +146,23 @@ The game builds the participant list of a mission battle once and never recalcul
 - It does not use the network or touch copy protection. The only files it opens are `Warhammer3.exe` (to compute its SHA-256) and its own log, `coop_event_battles_native_log.txt`.
 - It only imports `KERNEL32.dll` and `bcrypt.dll` (for SHA-256).
 
-It exports three functions: `luaopen_ceb_native_bridge`, `ceb_bridge_abi_version` and `ceb_bridge_host_supported`. To Lua it exposes `status()`, `inspect()` (read-only) and `join()`.
+It exports three functions: `luaopen_ceb_native_bridge`, `ceb_bridge_abi_version` and `ceb_bridge_host_supported`. To Lua it exposes `status()`, `inspect()` (read-only), `join()`, `prebattle()` and `results()`.
 
 #### Game functions it uses
 
 | Name | RVA | Purpose |
 |---|---|---|
-| `allocate` / `release` | `0x4d3da0` / `0x4e98d4` | Allocate and free memory with the game's allocator |
-| `construct_cohort` / `destroy_cohort` | `0x26687b4` / `0x2676658` | Create the participant for the allied faction |
-| `append_cohort` | `0x2642468` | Add it to the host's side |
-| `initialize_cohort` | `0x269af00` | Compute its deployment or arrival as reinforcements |
-| `prepare_character` / `observe_force` | `0x26b5c78` / `0x1c3adf0` | Register the general and the army in the battle |
-| `lookup_force` / `at_war` | `0x1c6a30c` / `0x26ba60c` | Find the army by its ID and check the factions are not at war |
-| `reinforcement_direction` | `0x2692774` | Direction the army arrives from |
-| `make_force_data` / `push_force_data` / `destroy_force_data` | `0x2669900` / `0x263f6b0` / `0x2676720` | Extra army of the same faction (single-player test only, disabled) |
+| `allocate` / `release` | `0x4f38e0` / `0x509184` | Allocate and free memory with the game's allocator |
+| `construct_cohort` / `destroy_cohort` | `0x266eb78` / `0x267c988` | Create the participant for the allied faction |
+| `append_cohort` | `0x2648688` | Add it to the host's side |
+| `initialize_cohort` | `0x26a1264` | Compute its deployment or arrival as reinforcements |
+| `prepare_character` / `observe_force` | `0x26bbec8` / `0x1c41354` | Register the general and the army in the battle |
+| `lookup_force` / `at_war` | `0x1c705e0` / `0x26c0848` | Find the army by its ID and check the factions are not at war |
+| `reinforcement_direction` | `0x2698abc` | Direction the army arrives from |
+| `make_force_data` / `push_force_data` / `destroy_force_data` | `0x266fcc4` / `0x26458c0` / `0x267ca50` | Extra army of the same faction (single-player test only, disabled) |
+| `open_pre_battle` / `open_battle_results` | `0x1ea2fa4` / `0x1ea2e14` | Open the pre-battle and results screens on the ally's PC, with the game's own UI functions |
+| `rebuild_choosers` | `0x2910fa8` | Rebuild the list of players who choose in the battle, so the ally is listed and both PCs hold the same list |
+| `campaign_ui_store` | `0x1c309ca` | Locate the campaign UI (only its address is read) |
 
 ### How the DLL reaches your PC
 
@@ -173,14 +181,14 @@ After loading a co-op campaign with the mod, in PowerShell:
 Get-FileHash "C:\Program Files (x86)\Steam\steamapps\common\Total War WARHAMMER III\ceb_native_bridge.dll" -Algorithm SHA256
 ```
 
-The result must match the DLL SHA-256 published in the [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) for that version. For version 1.1.3:
+The result must match the DLL SHA-256 published in the [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) for that version. For version 1.1.11:
 
 | File | SHA-256 |
 |---|---|
-| `ceb_native_bridge.dll` | `426ea2e8275b544d130c7051dae38c66eecf4f5b45b763478c3b810933eef6e0` |
-| `coop_event_battles.pack` | `a3edb4ba1f9d850d91f59bdd681b64cc51d586e5f50989c8548f71ee6ae1eb3a` |
+| `ceb_native_bridge.dll` | `4027abc82542cf6189e260073c96a0b88e5bf3ea44a672473441526317ca348b` |
+| `coop_event_battles.pack` | `bce8c20e8f4d9dca56e71eb1aefc3b8692147a396185d376ea503b27832fc89a` |
 
-[`release/1.1.3/native_build.json`](release/1.1.3/native_build.json) records the hash of the source files that DLL was built from. The GitHub Actions workflow builds the DLL from this code on every change and shows its hash.
+[`release/1.1.11/native_build.json`](release/1.1.11/native_build.json) records the hash of the source files that DLL was built from. The GitHub Actions workflow builds the DLL from this code on every change and shows its hash.
 
 Antivirus software may flag the DLL because it is not digitally signed.
 

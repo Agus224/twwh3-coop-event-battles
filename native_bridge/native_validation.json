@@ -1,5 +1,5 @@
 {
-  "dll_sha256": "426ea2e8275b544d130c7051dae38c66eecf4f5b45b763478c3b810933eef6e0",
+  "dll_sha256": "4027abc82542cf6189e260073c96a0b88e5bf3ea44a672473441526317ca348b",
   "exe_sha256": "d2a8a58288bf8bd86768f21ff6be036cebb1916f9c312999c60afc1abe13789f",
   "tests": [
     {
@@ -51,7 +51,7 @@
       "passed": true
     },
     {
-      "name": "Fourteen native entry signatures match file",
+      "name": "Eighteen native entry signatures match file",
       "passed": true
     }
   ],

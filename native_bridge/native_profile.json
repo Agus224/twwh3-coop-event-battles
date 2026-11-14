@@ -58,6 +58,22 @@
     "destroy_force_data": {
       "rva": "0x267ca50",
       "signature": "40534883ec20488bd9488b89800000004885c97405e8c654"
+    },
+    "open_battle_results": {
+      "rva": "0x1ea2e14",
+      "signature": "48895c2408488974241048897c241855488bec4883ec6048"
+    },
+    "campaign_ui_store": {
+      "rva": "0x1c309ca",
+      "signature": "48890db7373402e8468d1500488b6c245848f7db488b5c24"
+    },
+    "rebuild_choosers": {
+      "rva": "0x2910fa8",
+      "signature": "40534883ec3083610400488bd9e8ae800100c6412802e891"
+    },
+    "open_pre_battle": {
+      "rva": "0x1ea2fa4",
+      "signature": "488bc448895810488970184889782055488d68a84881ec50"
     }
   }
 }

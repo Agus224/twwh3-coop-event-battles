@@ -1,0 +1,21 @@
+{
+  "version": "1.1.11",
+  "build": "1e58cde3",
+  "protocol": 1,
+  "content_sha256": "1e58cde3b3bb131e1c1617a1e7b514a152517d9d40ab8b464c4da3ba64de2934",
+  "pack_sha256": "bce8c20e8f4d9dca56e71eb1aefc3b8692147a396185d376ea503b27832fc89a",
+  "per_join_inspection": "All human clients must acknowledge matching force CQIs and participant count before native.join",
+  "installed": false,
+  "activated": false,
+  "live_game_validated": false,
+  "members": [
+    "script/campaign/mod/coop_event_battles.lua",
+    "script/battle/mod/coop_event_battles_battle.lua",
+    "ui/common ui/ceb_army_picker.twui.xml",
+    "ui/campaign ui/mp_pending_action_blocking_msg.twui.xml",
+    "script/campaign/mod/coop_event_battles_native_blob.lua"
+  ],
+  "dll_required": "embedded in the pack (script/campaign/mod/coop_event_battles_native_blob.lua); written beside Warhammer3.exe on campaign load",
+  "native_api": "status(); inspect(game_interface, host_force_cqi, ally_force_cqi[, flags]); join(game_interface, host_force_cqi, ally_force_cqi[, flags]); flags 1 = single-player same-faction test",
+  "dll_sha256": "4027abc82542cf6189e260073c96a0b88e5bf3ea44a672473441526317ca348b"
+}

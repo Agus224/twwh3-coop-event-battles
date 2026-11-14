@@ -22,5 +22,53 @@
     "content_sha256": "59a167214ecf953e818fed208506c12c0b46e1c3166d79fdd0830ce7d069136b",
     "pack_sha256": "a3edb4ba1f9d850d91f59bdd681b64cc51d586e5f50989c8548f71ee6ae1eb3a",
     "dll_sha256": "426ea2e8275b544d130c7051dae38c66eecf4f5b45b763478c3b810933eef6e0"
+  },
+  "1.1.4": {
+    "build": "e137282b",
+    "content_sha256": "e137282b2a573c68d539aaf5c2a64b87bdb91070a8cf0834777bb73e50cf755c",
+    "pack_sha256": "78c11751d448cc02959dae0ad70bbb4095b290f34963937d1a54b963e196eeab",
+    "dll_sha256": "93606b7544dff6349fbb336384a653cf968a0781a3135a40e80f98e978e74b2c"
+  },
+  "1.1.5": {
+    "build": "65d7d9e8",
+    "content_sha256": "65d7d9e825380a358755e2ea92acff19ec81a095b4c1f3997370bae00b7df957",
+    "pack_sha256": "1236ddd61286db847d2cfa0c6cc2e6995c9521e4dbd5d0a1c229bac5794f4c4b",
+    "dll_sha256": "832dc0cb12341b70655eb8f70dba501fc6c5e3283511b2a0fea1e20aeb8c829e"
+  },
+  "1.1.6": {
+    "build": "a0de0e66",
+    "content_sha256": "a0de0e665eaf1bd6b122c50504fac10d61040225e43f42a582582f4bdec4cf3d",
+    "pack_sha256": "8f9c2adc1d741c5a36a89c85c71b91d0ae10a232bee248bff1f1ce7845b756f5",
+    "dll_sha256": "8ae2f0ae6f3822fc64d02e3d576610aa60cec4e39948b78cc10a3a8b26c9b643"
+  },
+  "1.1.7": {
+    "build": "65099caa",
+    "content_sha256": "65099caa3bc0fbdea69a12a9037f3a94b5230e65ec9dbca9b772b666c890d1fd",
+    "pack_sha256": "546ae3207a925031a59c08676c2285772b71e18691f9d19c75bbdf88571fa92e",
+    "dll_sha256": "8e5682c5a285b8ed515054fdfabe5bac175cf9773524feab4dac4e26b8254f3e"
+  },
+  "1.1.8": {
+    "build": "303965e7",
+    "content_sha256": "303965e7f846d7c207dbe3b5e75d4bdc89573434e4317b30074a75a220d97aed",
+    "pack_sha256": "940e61e399e4688fb2a38dab76ba832d9e0ce09e9e29cae7f0d6812054228a5d",
+    "dll_sha256": "0ccdcc18c00036175869886a70183ae238bf68e145539ebbb686d91f4026beb0"
+  },
+  "1.1.9": {
+    "build": "4312f763",
+    "content_sha256": "4312f763312cbec73cabd6a8542b39ab0220a1a56dbad788582a874c207141cd",
+    "pack_sha256": "31336a9358800e4c068d85f578ca0def04b7fb6dc3ad861dbdc10fd73861521d",
+    "dll_sha256": "5ba9d98dae0fdcb195ae3e28ba692798c6f7131c44dd8e07936d41dcfd802e61"
+  },
+  "1.1.10": {
+    "build": "7c6c52d8",
+    "content_sha256": "7c6c52d8f4da7fd469b22e5c4086985ce786724fbcc8504a58b1ab5b5eeb3966",
+    "pack_sha256": "793ccf5a4b0a9ff7172074372c76363f4d3a50604fe09eaa23463535e9d70f48",
+    "dll_sha256": "7d8ed9e214ae8544359d503d4dc493b50664d689274e76befe9e0c4b6ec81b90"
+  },
+  "1.1.11": {
+    "build": "1e58cde3",
+    "content_sha256": "1e58cde3b3bb131e1c1617a1e7b514a152517d9d40ab8b464c4da3ba64de2934",
+    "pack_sha256": "bce8c20e8f4d9dca56e71eb1aefc3b8692147a396185d376ea503b27832fc89a",
+    "dll_sha256": "4027abc82542cf6189e260073c96a0b88e5bf3ea44a672473441526317ca348b"
   }
 }
