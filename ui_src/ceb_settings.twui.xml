@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<layout version="142" comment="Co-op Event Battles: settings panel (Lua places everything)" precache_condition="">
+	<hierarchy>
+		<root this="1DB830B8-6933-4EEB-853D6FA439235A2A">
+			<ceb_settings this="0F3EE664-45F6-4E0B-8A5556CD457E0C7D">
+				<ceb_cfg_title this="3881A404-2103-437F-96F5D1B34519DD26" />
+				<ceb_cfg_intro this="D58DAF18-384F-4D81-85BD2EFCA788A9CE" />
+				<ceb_cfg_row_tx this="8E9DE980-F7D2-44DD-B420B3C70A1C0B61" />
+			</ceb_settings>
+		</root>
+	</hierarchy>
+	<components>
+		<root this="1DB830B8-6933-4EEB-853D6FA439235A2A" id="root" uniqueguid="1DB830B8-6933-4EEB-853D6FA439235A2A" offset="0.00,0.00" allowhorizontalresize="true" allowverticalresize="true" priority="250" tooltipslocalised="true" currentstate="A94B8FB2-1E5E-4F76-ADC9E4F634834727" defaultstate="A94B8FB2-1E5E-4F76-ADC9E4F634834727">
+			<states>
+				<newstate this="A94B8FB2-1E5E-4F76-ADC9E4F634834727" name="NewState" uniqueguid="A94B8FB2-1E5E-4F76-ADC9E4F634834727" width="1600" height="900" />
+			</states>
+		</root>
+		<ceb_settings this="0F3EE664-45F6-4E0B-8A5556CD457E0C7D" id="ceb_settings" offset="0.00,0.00" allowhorizontalresize="true" priority="250" tooltipslocalised="true" soundcategory="UI_GBL_POPUP_Dialogue_Box_No_State" uniqueguid="0F3EE664-45F6-4E0B-8A5556CD457E0C7D" currentstate="C22A80F2-BD20-432C-AF925E0B8DB7B39A" allowverticalresize="true">
+			<componentimages>
+				<component_image this="8A34713B-8899-44A5-9E74AF91F608417B" uniqueguid="8A34713B-8899-44A5-9E74AF91F608417B" imagepath="ui/skins/default/panel_back_tile.png" />
+				<component_image this="A6589385-554F-4E4E-97B0C5FAD420F82E" uniqueguid="A6589385-554F-4E4E-97B0C5FAD420F82E" imagepath="ui/skins/default/panel_back_border.png" />
+				<component_image this="4853FDF1-7ACF-4B00-AE877CBB6A170169" uniqueguid="4853FDF1-7ACF-4B00-AE877CBB6A170169" imagepath="ui/skins/default/panel_back_bottom.png" />
+			</componentimages>
+			<states>
+				<newstate this="C22A80F2-BD20-432C-AF925E0B8DB7B39A" name="NewState" width="420" height="267" focustype="Active" interactive="true" uniqueguid="C22A80F2-BD20-432C-AF925E0B8DB7B39A">
+					<imagemetrics>
+						<image this="EC457D70-D5FD-4D6B-AF82E2A702C71708" uniqueguid="EC457D70-D5FD-4D6B-AF82E2A702C71708" componentimage="8A34713B-8899-44A5-9E74AF91F608417B" width="420" height="267" tile="true" dockpoint="Center" margin="5.00,5.00,5.00,5.00" />
+						<image this="3658F8AE-8E03-4D08-A21592702A121530" uniqueguid="3658F8AE-8E03-4D08-A21592702A121530" componentimage="A6589385-554F-4E4E-97B0C5FAD420F82E" width="420" height="267" tile="true" margin="30.00,30.00,30.00,30.00" />
+						<image this="6C871811-2016-4A18-9B6BBBF8836E1A6B" uniqueguid="6C871811-2016-4A18-9B6BBBF8836E1A6B" componentimage="4853FDF1-7ACF-4B00-AE877CBB6A170169" offset="0.00,192.00" width="420" height="75" tile="true" dockpoint="Bottom Center" canresizeheight="false" margin="30.00,40.00,30.00,40.00" />
+					</imagemetrics>
+				</newstate>
+			</states>
+		</ceb_settings>
+		<ceb_cfg_title this="3881A404-2103-437F-96F5D1B34519DD26" id="ceb_cfg_title" uniqueguid="3881A404-2103-437F-96F5D1B34519DD26" offset="0.00,0.00" allowhorizontalresize="true" allowverticalresize="true" priority="250" tooltipslocalised="true" currentstate="F782181E-BE94-474A-9E67AB091E8AF0A2" defaultstate="F782181E-BE94-474A-9E67AB091E8AF0A2">
+			<states>
+				<newstate this="F782181E-BE94-474A-9E67AB091E8AF0A2" name="NewState" uniqueguid="F782181E-BE94-474A-9E67AB091E8AF0A2" width="500" height="32">
+					<component_text text="" texthalign="Center" textvalign="Center" textxoffset="0.00,0.00" textyoffset="0.00,0.00" font_m_size="18" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_18" texthbehaviour="Never split" />
+				</newstate>
+			</states>
+		</ceb_cfg_title>
+		<ceb_cfg_intro this="D58DAF18-384F-4D81-85BD2EFCA788A9CE" id="ceb_cfg_intro" uniqueguid="D58DAF18-384F-4D81-85BD2EFCA788A9CE" offset="0.00,0.00" allowhorizontalresize="true" allowverticalresize="true" priority="250" tooltipslocalised="true" currentstate="378A6144-708C-4213-88C6C43A6447D90E" defaultstate="378A6144-708C-4213-88C6C43A6447D90E">
+			<states>
+				<newstate this="378A6144-708C-4213-88C6C43A6447D90E" name="NewState" uniqueguid="378A6144-708C-4213-88C6C43A6447D90E" width="500" height="44">
+					<component_text text="" texthalign="Left" textvalign="Center" textxoffset="0.00,0.00" textyoffset="0.00,0.00" font_m_size="13" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_13" texthbehaviour="Never split" />
+				</newstate>
+			</states>
+		</ceb_cfg_intro>
+		<ceb_cfg_row_tx this="8E9DE980-F7D2-44DD-B420B3C70A1C0B61" id="ceb_cfg_row_tx" uniqueguid="8E9DE980-F7D2-44DD-B420B3C70A1C0B61" offset="0.00,0.00" allowhorizontalresize="true" allowverticalresize="true" priority="250" tooltipslocalised="true" currentstate="FBBE810E-9AC5-4FF3-A8A3C9A4F441643A" defaultstate="FBBE810E-9AC5-4FF3-A8A3C9A4F441643A" visible="false">
+			<states>
+				<newstate this="FBBE810E-9AC5-4FF3-A8A3C9A4F441643A" name="NewState" uniqueguid="FBBE810E-9AC5-4FF3-A8A3C9A4F441643A" width="300" height="32">
+					<component_text text="" texthalign="Left" textvalign="Center" textxoffset="0.00,0.00" textyoffset="0.00,0.00" font_m_size="14" font_m_colour="#FFF8D7FF" font_m_leading="3" fontcat_name="body_14" texthbehaviour="Never split" />
+				</newstate>
+			</states>
+		</ceb_cfg_row_tx>
+	</components>
+</layout>

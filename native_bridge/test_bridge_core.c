@@ -168,7 +168,8 @@ static void validation_cases(void) {
     reset();putp(model+0x6cb8,0);expect_code(ceb_inspect(&engine,model,72,99),"no_pending");
     reset();putp(pending+0xd0,0);expect_code(ceb_inspect(&engine,model,72,99),"foreign_pending");
     reset();put32(pending+0xd8,2);expect_code(ceb_inspect(&engine,model,72,99),"not_pending_quest");
-    reset();putp(pending+0x278,0);expect_code(ceb_inspect(&engine,model,72,99),"not_pending_quest");
+    /* 1.2.0: a normal battle (no quest context at +0x278) passes the inspection. */
+    reset();putp(pending+0x278,0);r=ceb_inspect(&engine,model,72,99);EXPECT(r.ok);EXPECT(strcmp(r.code,"ready")==0);EXPECT(!r.changed);
     reset();*(unsigned char *)(pending+0x2aa)=1;expect_code(ceb_join(&engine,model,72,99),"reinforcements_filtered");
     reset();hostile=1;expect_code(ceb_join(&engine,model,72,99),"hostile_faction");
     reset();*(unsigned char *)(ally_faction+0x1bc4)=2;expect_code(ceb_join(&engine,model,72,99),"not_two_humans");

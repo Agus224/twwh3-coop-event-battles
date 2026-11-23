@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<layout version="142" comment="Co-op Event Battles: settings button frame" precache_condition="">
+	<hierarchy>
+		<root this="FBC0233D-3236-4CA6-91D80D071F8B9E40" />
+	</hierarchy>
+	<components>
+		<root this="FBC0233D-3236-4CA6-91D80D071F8B9E40" id="root" uniqueguid="FBC0233D-3236-4CA6-91D80D071F8B9E40" offset="0.00,0.00" allowhorizontalresize="true" allowverticalresize="true" priority="1" tooltipslocalised="true" currentstate="44F6C71C-F7F7-46F8-890D5A972C0BD31B" defaultstate="44F6C71C-F7F7-46F8-890D5A972C0BD31B">
+			<states>
+				<newstate this="44F6C71C-F7F7-46F8-890D5A972C0BD31B" name="NewState" uniqueguid="44F6C71C-F7F7-46F8-890D5A972C0BD31B" width="66" height="72">
+					<imagemetrics>
+						<image this="A37BD9FC-7A34-4F76-8E5ADD9162A72F8E" uniqueguid="A37BD9FC-7A34-4F76-8E5ADD9162A72F8E" componentimage="E2BE295F-EE3C-40D9-B1A61357C2F50454" width="66" height="72" />
+					</imagemetrics>
+				</newstate>
+			</states>
+			<componentimages>
+				<component_image this="E2BE295F-EE3C-40D9-B1A61357C2F50454" uniqueguid="E2BE295F-EE3C-40D9-B1A61357C2F50454" imagepath="ui/skins/default/war_cor_button_frame.png" />
+			</componentimages>
+		</root>
+	</components>
+</layout>

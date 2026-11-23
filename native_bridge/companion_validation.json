@@ -1,6 +1,6 @@
 {
   "lua_runtime": "Lua 5.1 via lupa.lua51",
-  "tests_run": 47,
+  "tests_run": 53,
   "failures": 0,
   "errors": 0,
   "success": true,

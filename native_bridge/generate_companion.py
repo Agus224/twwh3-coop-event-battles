@@ -36,7 +36,7 @@ end = source.index('-- UI (local only', start)
 source = source[:start] + (ROOT / 'native_gameplay.inc.lua').read_text(encoding='utf-8') + '\n' + source[end:]
 source = source.replace('#self:get_lendable_units(character:military_force())', 'self:army_unit_count(character:military_force())')
 start = source.index('cm:add_saving_game_callback(')
-source = source[:start] + (ROOT / 'lifecycle.inc.lua').read_text(encoding='utf-8')
+source = source[:start] + (ROOT / 'settings.inc.lua').read_text(encoding='utf-8') + chr(10) + (ROOT / 'lifecycle.inc.lua').read_text(encoding='utf-8')
 start = source.index('function ceb:on_ui_trigger(')
 end = source.index('function ceb:handle_decline(', start)
 source = source[:start] + (ROOT / 'network.inc.lua').read_text(encoding='utf-8') + '\n' + source[end:]

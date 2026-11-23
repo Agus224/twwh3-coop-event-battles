@@ -15,6 +15,9 @@ const members = {
 // alliance; without this, quest scripts die after fading the intro out (black screen).
 members['script/battle/mod/coop_event_battles_battle.lua'] = fs.readFileSync(path.join(base, 'battle_fix.lua'));
 members['ui/common ui/ceb_army_picker.twui.xml'] = fs.readFileSync(path.join(base, '../ui_src/ceb_army_picker.twui.xml'));
+// 1.2.0: settings button frame and panel (tools/build_settings_layout.py).
+members['ui/common ui/ceb_hud.twui.xml'] = fs.readFileSync(path.join(base, '../ui_src/ceb_hud.twui.xml'));
+members['ui/common ui/ceb_settings.twui.xml'] = fs.readFileSync(path.join(base, '../ui_src/ceb_settings.twui.xml'));
 // Do not ship script/enable_console_logging: it makes the game write a new script_log_*.txt
 // in the game folder on every launch, and those files are never cleaned up (1.1.1).
 members['ui/campaign ui/mp_pending_action_blocking_msg.twui.xml'] = fs.readFileSync(path.join(base, '../ui_src/mp_pending_action_blocking_msg.twui.xml'));

@@ -17,7 +17,7 @@ function list(t) return {num_items=function() return #t end,item_at=function(_,i
 function faction(key,cqi)
  return {name=function() return key end,command_queue_index=function() return cqi end,
  is_null_interface=function() return false end,is_human=function() return true end,
- is_dead=function() return false end,at_war_with=function() return false end}
+ is_dead=function() return false end,at_war_with=function() return false end,treasury=function() return 100000 end}
 end
 fa,fb,fc=faction('host',1),faction('ally',2),faction('third',3)
 function character(cqi,f)
@@ -493,6 +493,74 @@ class CompanionTests(unittest.TestCase):
         ''')
         self.assertEqual(self.lua.eval('pre_calls[1]'), 3)
         self.assertEqual(self.lua.eval('#host_cbs'), 1)
+
+    def test_third_client_syncs_choosers_after_a_join(self):
+        self.lua.execute('''
+        refreshes=0; ceb.start_host_pre_battle_refresh=function() refreshes=refreshes+1 end
+        ceb.start_ally_pre_battle_check=function() error('third client is not the ally') end
+        cm.get_local_faction_name=function() return 'third' end; cm.get_local_faction=function() return fc end
+        cm.real_callback=function() end; ceb.check_session_complete=function() end
+        ceb.session={id='s',host_faction='host',responded={},proposal={id='p1',faction='ally'}}
+        ceb:finish_proposal(true,'joined')
+        ''')
+        self.assertEqual(self.lua.eval('refreshes'), 1)
+
+    def test_faction_already_in_the_battle_is_not_invited_again(self):
+        self.ready()
+        self.lua.execute("pb.secondary_attackers=function() return list({ally}) end; ceb.session=nil; ceb:on_pending_battle(pb)")
+        self.assertIsNone(self.lua.eval('ceb.session'))
+        self.lua.execute("pb.secondary_attackers=function() return list({}) end; ceb:on_pending_battle(pb)")
+        self.assertEqual(self.lua.eval('ceb.session.invited[1]'), 'ally')
+
+    def normal_battle(self):
+        self.lua.execute("pb.set_piece_battle_key=function() return '' end; pb.quest_mission_key=function() return '' end")
+
+    def test_settings_message_is_stored_for_its_sender_and_saved(self):
+        self.lua.execute("event(2,'S|1|1|0|1|15|high')")
+        self.assertTrue(self.lua.eval("ceb:get_settings('ally').normal and not ceb:get_settings('ally').defenses"))
+        self.assertEqual(self.lua.eval("ceb:get_settings('ally').min_units"), 15)
+        self.assertEqual(self.lua.eval("ceb:get_settings('ally').cost"), 'high')
+        self.assertFalse(self.lua.eval("ceb:get_settings('host').normal"))
+        self.lua.execute("event(2,'S|1|1|0|1|13|high'); event(2,'S|x|1|0|1|15|high')")
+        self.assertEqual(self.lua.eval("ceb:get_settings('ally').min_units"), 15)
+        self.lua.execute("save_cb({})")
+        self.assertEqual(self.lua.eval("saved.ceb_settings.ally.cost"), 'high')
+
+    def test_normal_battle_is_offered_only_to_who_enabled_it(self):
+        self.normal_battle()
+        self.ready()
+        self.lua.execute("ceb.session=nil; ceb:on_pending_battle(pb)")
+        self.assertIsNone(self.lua.eval('ceb.session'))
+        self.lua.execute("event(2,'S|1|0|1|0|20|normal'); ceb:on_pending_battle(pb)")
+        self.assertIsNone(self.lua.eval('ceb.session'))  # host attacks, ally only wants defences
+        self.lua.execute("event(2,'S|1|1|1|1|20|normal'); ceb:on_pending_battle(pb)")
+        self.assertIsNone(self.lua.eval('ceb.session'))  # enemy side has no units
+        self.lua.execute("event(2,'S|1|1|1|0|20|normal'); ceb:on_pending_battle(pb)")
+        self.assertTrue(self.lua.eval('ceb.session.normal'))
+        self.assertEqual(self.lua.eval('ceb.session.invited[1]'), 'ally')
+
+    def test_normal_battle_teleport_is_paid_on_join_and_refused_without_gold(self):
+        self.normal_battle()
+        self.ready()
+        self.lua.execute('''
+        paid={}; cm.treasury_mod=function(_,f,v) table.insert(paid,f..":"..v) end
+        fb.treasury=function() return 100 end
+        event(2,'S|1|1|1|0|20|normal'); ceb:on_pending_battle(pb)
+        ''')
+        # ally at 200,200, host at 100,100: distance 141 -> 250 + 283 = 533 -> 550 gold
+        self.assertEqual(self.lua.eval("ceb:teleport_cost(ally, host)"), 550)
+        self.lua.execute("event(2,'J|'..ceb.session.id..'|20')")
+        self.assertEqual(self.lua.eval('calls.inspect'), 0)
+        self.lua.execute("fb.treasury=function() return 5000 end; ceb.session.responded={}; event(2,'J|'..ceb.session.id..'|20')")
+        self.assertEqual(self.lua.eval('calls.inspect'), 1)
+        self.lua.execute("ack(1); ack(2)")
+        self.assertEqual(self.lua.eval('calls.join'), 1)
+        self.assertEqual(self.lua.eval('paid[1]'), 'ally:-550')
+
+    def test_mission_battles_stay_free(self):
+        self.ready()
+        self.lua.execute("ceb:on_pending_battle(pb)")
+        self.assertEqual(self.lua.eval("ceb:teleport_cost(ally, host)"), 0)
 
     def test_ally_camera_moves_to_host_when_pre_battle_opens(self):
         self.pre_battle_harness()

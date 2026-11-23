@@ -71,7 +71,10 @@ CebResult ceb_inspect_ex(const CebEngine *e,CebPtr model,uint32_t host_id,uint32
     r.pending=ptr(model+0x6cb8);
     if(!valid(e,r.pending,0x2d0)) return fail(r,"no_pending","No pending battle");
     if(ptr(r.pending+0xd0)!=model) return fail(r,"foreign_pending","Pending battle belongs to another campaign model");
-    if(u32(r.pending+0xd8)!=1 || !ptr(r.pending+0x278)) return fail(r,"not_pending_quest","A pending quest battle before combat is required");
+    /* 1.2.0: normal campaign battles too. Their pending battle has no quest context at +0x278, which
+     * the join never used; tested in single player on 22/23-nov-2026 (settlement attacks and
+     * defences, manual and autoresolve). Only the pre-combat state is required. */
+    if(u32(r.pending+0xd8)!=1) return fail(r,"not_pending_quest","A pending battle before combat is required");
     if(u8(r.pending+0x2aa)) return fail(r,"reinforcements_filtered","This pending battle is filtering additional armies");
     manager=ptr(model+0x5bb8);
     if(!valid(e,manager,0x160)) return fail(r,"bad_force_manager","Unexpected military force manager");

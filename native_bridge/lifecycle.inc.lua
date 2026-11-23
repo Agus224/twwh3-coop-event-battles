@@ -2,6 +2,7 @@ cm:add_saving_game_callback(function(context)
     cm:save_named_value("ceb_session_counter", ceb.session_counter, context)
     cm:save_named_value("ceb_native_teleports", ceb.teleports or {}, context)
     cm:save_named_value("ceb_native_notice_shown", ceb.native_notice_shown == true, context)
+    cm:save_named_value("ceb_settings", ceb.settings or {}, context)
     -- Retain legacy metadata so returning to the previous version does not lose its records.
     cm:save_named_value("ceb_loans", ceb.legacy_loans, context)
     cm:save_named_value("ceb_cap_overridden", ceb.legacy_cap, context)
@@ -13,6 +14,7 @@ cm:add_loading_game_callback(function(context)
     ceb.session_counter = cm:load_named_value("ceb_session_counter", 0, context) or 0
     ceb.teleports = cm:load_named_value("ceb_native_teleports", {}, context) or {}
     ceb.native_notice_shown = cm:load_named_value("ceb_native_notice_shown", false, context) == true
+    ceb.settings = cm:load_named_value("ceb_settings", {}, context) or {}
     ceb.legacy_blocked = #ceb.legacy_loans > 0 or ceb.legacy_cap
     -- Native readiness is process-local capability evidence and is never restored from a save.
     ceb.peers = {}
@@ -342,10 +344,20 @@ function ceb:singleplayer_diagnostics()
         end
     end, 4000, "ceb_sp_status")
     if not ready then return end
+    -- Decide inside the event and re-read the model's pending battle later: a kept pending_battle of
+    -- an AI battle resolved in the meantime crashed the game (23-nov-2026).
     core:add_listener("ceb_sp_PendingBattle", "PendingBattle", true, function(context)
-        local pb = context:pending_battle()
+        local mine = false
+        pcall(function()
+            local host = self:get_host_character(context:pending_battle())
+            mine = host and host:faction():name() == self:local_faction_key() or false
+        end)
+        if not mine then return end
         cm:callback(function()
-            local ok, err = pcall(function() self:sp_offer_armies(pb) end)
+            local ok, err = pcall(function()
+                local pb = cm:model():pending_battle()
+                if pb:is_active() and not pb:has_been_fought() then self:sp_offer_armies(pb) end
+            end)
             if not ok then self:log("SP offer error: " .. tostring(err)) end
         end, 0.5)
     end, true)
@@ -368,7 +380,10 @@ end
 function ceb:sp_battle_signature(pb, host)
     local mission_key = ""
     pcall(function() mission_key = pb:quest_mission_key() or "" end)
-    return tostring(host:command_queue_index()) .. "|" .. tostring(pb:set_piece_battle_key()) .. "|" .. mission_key
+    local enemy = ""
+    pcall(function() local e = self:enemy_of_host(pb, host); enemy = e and tostring(e:command_queue_index()) or "" end)
+    return tostring(host:command_queue_index()) .. "|" .. tostring(pb:set_piece_battle_key()) .. "|" .. mission_key ..
+        "|t" .. tostring(cm:model():turn_number()) .. "|e" .. enemy
 end
 
 function ceb:sp_offer_armies(pb)
@@ -500,6 +515,8 @@ function ceb:sp_join(char_cqi)
     end
     self.sp_joined = s.signature
     cm:update_pending_battle()
+    -- The pre-battle screen was built before the join: refresh it as the co-op host does.
+    pcall(function() self:start_host_pre_battle_refresh() end)
     local included = self:char_in_pending_battle(cm:model():pending_battle(), char_cqi)
     self:log("SP join done: " .. tostring(result.code) .. "; script reports army in pending battle: " .. tostring(included))
     self:ui_add_reinforcement_note(s.host_faction, char_cqi)
@@ -544,6 +561,8 @@ cm:add_first_tick_callback(function()
     ceb:show_native_status_once()
     ceb:add_listeners()
     ceb:add_note_listeners()
+    local settings_ok, settings_err = pcall(function() ceb:settings_start() end)
+    if not settings_ok then ceb:log("Settings button error: " .. tostring(settings_err)) end
     if ceb.legacy_blocked then ceb:log("Legacy loan save blocked; no settlement performed"); ceb:ui_show_info(ceb:txt("legacy"), 20000) end
     ceb:send("Q")
     ceb:announce_native()

@@ -8,6 +8,8 @@ En la campaña cooperativa, cuando un jugador se teletransporta a una batalla de
 
 Es ideal para las **batallas finales de la campaña**, como las de Archaon o Nagash, donde los dos jugadores pueden pelear juntos con sus ejércitos.
 
+Desde la 1.2.0 también puede servir para **batallas normales** (ataques y defensas): cada jugador lo activa en el botón de configuración del mod (al lado de los botones de arriba de la campaña), con un filtro de tamaño opcional y un costo en oro por teletransportarse según la distancia (o gratis).
+
 Este repositorio publica **todo el código fuente** del mod, incluido el componente nativo `ceb_native_bridge.dll`, para que cualquiera pueda revisar qué hace y comprobar que la DLL publicada es la que sale de este código. Todos los derechos reservados: ver [Derechos](#derechos).
 
 ## Por qué hay una DLL
@@ -69,14 +71,14 @@ Después de cargar una campaña cooperativa con el mod, en PowerShell:
 Get-FileHash "C:\Program Files (x86)\Steam\steamapps\common\Total War WARHAMMER III\ceb_native_bridge.dll" -Algorithm SHA256
 ```
 
-El resultado tiene que coincidir con el SHA-256 de la DLL publicado en la [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) de esa versión. Para la versión 1.1.11:
+El resultado tiene que coincidir con el SHA-256 de la DLL publicado en la [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) de esa versión. Para la versión 1.2.0:
 
 | Archivo | SHA-256 |
 |---|---|
-| `ceb_native_bridge.dll` | `4027abc82542cf6189e260073c96a0b88e5bf3ea44a672473441526317ca348b` |
-| `coop_event_battles.pack` | `bce8c20e8f4d9dca56e71eb1aefc3b8692147a396185d376ea503b27832fc89a` |
+| `ceb_native_bridge.dll` | `a3cca09ab8d23f9d5caa24bb7d41b7c0cdf554a601b8c359d7c4ed816f20dcb7` |
+| `coop_event_battles.pack` | `7e5bd5c1f9f2bd556862e4bc63bc5547f101a4e4ba01ae920daf570740f38294` |
 
-[`release/1.1.11/native_build.json`](release/1.1.11/native_build.json) registra el hash de los archivos fuente con los que se compiló esa DLL. El workflow de GitHub Actions compila la DLL desde este código en cada cambio y muestra su hash.
+[`release/1.2.0/native_build.json`](release/1.2.0/native_build.json) registra el hash de los archivos fuente con los que se compiló esa DLL. El workflow de GitHub Actions compila la DLL desde este código en cada cambio y muestra su hash.
 
 Los antivirus pueden marcar la DLL porque no está firmada digitalmente.
 
@@ -119,6 +121,8 @@ Mod no oficial, sin relación con Creative Assembly ni SEGA. El componente nativ
 In co-op campaigns, when a player teleports to a mission or event battle, their ally can add their **real army** (lord, heroes, items, skills) to that same battle. The ally controls their army; casualties and experience are applied by the game.
 
 It is perfect for **end-game battles**, such as the Archaon or Nagash ones, where both players can fight together with their own armies.
+
+Since 1.2.0 it can also work in **normal battles** (attacks and defenses): each player turns it on with the mod's settings button (next to the campaign's top buttons), with an optional size filter and a gold cost for teleporting based on distance (or free).
 
 This repository publishes **all the source code** of the mod, including the native component `ceb_native_bridge.dll`, so anyone can review what it does and check that the published DLL comes from this code. All rights reserved: see [Rights](#rights).
 
@@ -181,14 +185,14 @@ After loading a co-op campaign with the mod, in PowerShell:
 Get-FileHash "C:\Program Files (x86)\Steam\steamapps\common\Total War WARHAMMER III\ceb_native_bridge.dll" -Algorithm SHA256
 ```
 
-The result must match the DLL SHA-256 published in the [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) for that version. For version 1.1.11:
+The result must match the DLL SHA-256 published in the [release](https://github.com/Agus224/twwh3-coop-event-battles/releases) for that version. For version 1.2.0:
 
 | File | SHA-256 |
 |---|---|
-| `ceb_native_bridge.dll` | `4027abc82542cf6189e260073c96a0b88e5bf3ea44a672473441526317ca348b` |
-| `coop_event_battles.pack` | `bce8c20e8f4d9dca56e71eb1aefc3b8692147a396185d376ea503b27832fc89a` |
+| `ceb_native_bridge.dll` | `a3cca09ab8d23f9d5caa24bb7d41b7c0cdf554a601b8c359d7c4ed816f20dcb7` |
+| `coop_event_battles.pack` | `7e5bd5c1f9f2bd556862e4bc63bc5547f101a4e4ba01ae920daf570740f38294` |
 
-[`release/1.1.11/native_build.json`](release/1.1.11/native_build.json) records the hash of the source files that DLL was built from. The GitHub Actions workflow builds the DLL from this code on every change and shows its hash.
+[`release/1.2.0/native_build.json`](release/1.2.0/native_build.json) records the hash of the source files that DLL was built from. The GitHub Actions workflow builds the DLL from this code on every change and shows its hash.
 
 Antivirus software may flag the DLL because it is not digitally signed.
 

@@ -98,6 +98,11 @@ function ceb:on_ui_trigger(context)
         if self:is_relevant_battle(pb) then self:on_pending_battle(pb) end
         return
     end
+    if action == "S" and #parts == 7 then
+        -- 1.2.0: a player's own settings; every client stores them for that faction.
+        if not self:apply_settings_message(faction_key, parts) then self:log("Ignoring malformed settings") end
+        return
+    end
     local s = self.session
     if action == "F" and #parts == 4 then
         if s and s.id == session_id and s.commit_ids and s.commit_ids[parts[3]] then

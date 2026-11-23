@@ -252,6 +252,13 @@ function ceb:char_in_pending_battle(pb, cqi)
 	return false
 end
 
+function ceb:faction_in_pending_battle(pb, faction_key)
+	for _, character in ipairs(self:pending_battle_participants(pb)) do
+		if is_valid(character) and character:faction():name() == faction_key then return true end
+	end
+	return false
+end
+
 function ceb:is_character_unit(unit)
 	local is_char = false
 	pcall(function()
@@ -378,8 +385,12 @@ function ceb:on_pending_battle(pb)
 	local mission_key = ""
 	pcall(function() mission_key = pb:quest_mission_key() or "" end)
 
+	local normal = not self:is_mission_battle(pb)
+	local enemy = normal and self:enemy_of_host(pb, host) or nil
+	local enemy_cqi = enemy and enemy:command_queue_index() or 0
 	if self.session then
-		if self.session.host_cqi == host_cqi and self.session.battle_key == battle_key and self.session.mission_key == mission_key then
+		if self.session.host_cqi == host_cqi and self.session.battle_key == battle_key and self.session.mission_key == mission_key and
+			(self.session.enemy_cqi or 0) == enemy_cqi then
 			self:log("PendingBattle re-fired for the active session " .. self.session.id .. ", ignoring")
 			return
 		end
@@ -393,7 +404,15 @@ function ceb:on_pending_battle(pb)
 		if faction_key ~= host_faction_key then
 			local faction = cm:get_faction(faction_key)
 			if faction and not faction:is_dead() and not faction:at_war_with(host_faction) then
-				table.insert(invited, faction_key)
+				-- After a resync the reloaded pending battle already holds the armies that joined
+				-- before it: inviting their factions again only offered armies the native join refuses.
+				if self:faction_in_pending_battle(pb, faction_key) then
+					self:log("Not inviting " .. faction_key .. ": already has an army in this battle")
+				elseif not self:wants_invite(pb, host, faction_key) then
+					self:log("Not inviting " .. faction_key .. ": normal battles of this kind are off in their settings")
+				else
+					table.insert(invited, faction_key)
+				end
 			end
 		end
 	end
@@ -411,6 +430,9 @@ function ceb:on_pending_battle(pb)
 		host_faction = host_faction_key,
 		host_cqi = host_cqi,
 		host_is_attacker = pb:has_attacker() and pb:attacker():command_queue_index() == host_cqi,
+		normal = normal,
+		enemy_cqi = enemy_cqi,
+		enemy_faction = enemy and enemy:faction():name() or (normal and self:garrison_faction_key(pb)) or nil,
 		invited = invited,
 		responded = {},
 		closed = false,

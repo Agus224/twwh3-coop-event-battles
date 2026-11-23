@@ -185,9 +185,12 @@ function ceb:finish_proposal(success, detail)
         if p.faction == self:local_faction_key() then
             local ok, err = pcall(function() self:start_ally_pre_battle_check() end)
             if not ok then self:log("Ally pre-battle check error: " .. tostring(err)) end
-        elseif s.host_faction == self:local_faction_key() then
+        else
+            -- 1.1.12: every other client, not only the host, rebuilds its chooser list. With three
+            -- players the third client kept the old list and the battle desynced at launch (23-nov).
+            -- The refresh also closes and reopens the panel where it is open (host, earlier allies).
             local ok, err = pcall(function() self:start_host_pre_battle_refresh() end)
-            if not ok then self:log("Host pre-battle refresh error: " .. tostring(err)) end
+            if not ok then self:log("Pre-battle refresh error: " .. tostring(err)) end
         end
     end
     -- 1.1.11: no centered popup on success; the refreshed pre-battle screen, the reinforcement note and

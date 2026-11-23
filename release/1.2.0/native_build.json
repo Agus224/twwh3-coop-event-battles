@@ -1,0 +1,15 @@
+{
+  "version": "1.2.0",
+  "source_sha256": "9553cf0d2086197062fc61e065f9204406c2e625e051003a4a8d894b3c9923b2",
+  "inputs": [
+    "bridge_core.c",
+    "bridge_core.h",
+    "ceb_native_bridge.c",
+    "native_profile.h",
+    "ceb_version.h",
+    "ceb_version.rc",
+    "build.cmd",
+    "VERSION.json"
+  ],
+  "dll_sha256": "a3cca09ab8d23f9d5caa24bb7d41b7c0cdf554a601b8c359d7c4ed816f20dcb7"
+}
